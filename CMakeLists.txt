@@ -3,4 +3,4 @@ project(RPG_game)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(RPG_game main.cpp Character.cpp Character.h)
+add_executable(RPG_game main.cpp Character.cpp Character.h Bullet.cpp Bullet.h)
