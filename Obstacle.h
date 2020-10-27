@@ -10,6 +10,8 @@ class Obstacle {
 public:
     Obstacle(float posX, float posY, int hp);
 
+    virtual ~Obstacle();
+
     void drop();
 
     float getPosX() const;

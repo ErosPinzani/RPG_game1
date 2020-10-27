@@ -10,6 +10,8 @@ class Bullet {
 public:
     Bullet(const std::string &type, float posX, float posY, float range, int speed, int power, bool hit);
 
+    virtual ~Bullet();
+
     void move(float posX,float posY);
 
     const std::string &getType() const;

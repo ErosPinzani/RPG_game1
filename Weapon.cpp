@@ -13,3 +13,7 @@ void Weapon::setType(const std::string &type) {
 }
 
 Weapon::Weapon(const std::string &type) : type(type) {}
+
+Weapon::~Weapon() {
+
+}

@@ -21,3 +21,7 @@ void PowerUp::heal() {
 }
 
 PowerUp::PowerUp(const std::string &type) : type(type) {}
+
+PowerUp::~PowerUp() {
+
+}

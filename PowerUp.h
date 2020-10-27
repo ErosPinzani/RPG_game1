@@ -10,6 +10,8 @@ class PowerUp {
 public:
     PowerUp(const std::string &type);
 
+    virtual ~PowerUp();
+
     void addCoin();
 
     const std::string &getType() const;
