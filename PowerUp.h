@@ -8,19 +8,16 @@
 
 class PowerUp {
 public:
-    PowerUp(const std::string &type);
+    PowerUp();
 
     virtual ~PowerUp();
 
     void addCoin();
 
-    const std::string &getType() const;
-
-    void setType(const std::string &type);
-
     void heal();
+
 private:
-    std::string type;
+    enum type {coin, health};
 };
 
 
