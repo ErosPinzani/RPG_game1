@@ -44,7 +44,7 @@ public:
 
     void setSpeed(int speed);
 
-private:
+protected:
     std::string type;
     float posX;
     float posY;

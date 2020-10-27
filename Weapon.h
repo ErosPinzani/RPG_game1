@@ -14,7 +14,7 @@ public:
 
     void setType(const std::string &type);
 
-private:
+protected:
     std::string type;
 };
 
