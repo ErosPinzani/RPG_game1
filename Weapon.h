@@ -8,6 +8,8 @@
 
 class Weapon {
 public:
+    Weapon(const std::string &type);
+
     virtual void shoot() = 0;
 
     const std::string &getType() const;

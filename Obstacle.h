@@ -8,11 +8,10 @@
 
 class Obstacle {
 public:
+    Obstacle(float posX, float posY, int hp);
+
     void drop();
-private:
-    float posX;
-    float posY;
-public:
+
     float getPosX() const;
 
     void setPosX(float posX);
@@ -26,6 +25,8 @@ public:
     void setHp(int hp);
 
 private:
+    float posX;
+    float posY;
     int hp;
 };
 

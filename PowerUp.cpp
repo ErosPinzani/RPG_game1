@@ -19,3 +19,5 @@ void PowerUp::addCoin() {
 void PowerUp::heal() {
 
 }
+
+PowerUp::PowerUp(const std::string &type) : type(type) {}

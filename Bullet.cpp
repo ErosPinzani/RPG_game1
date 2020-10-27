@@ -63,3 +63,6 @@ void Bullet::setHit(bool hit) {
 void Bullet::move(float posX, float posY) {
 
 }
+
+Bullet::Bullet(const std::string &type, float posX, float posY, float range, int speed, int power, bool hit) : type(
+        type), posX(posX), posY(posY), range(range), speed(speed), power(power), hit(hit) {}

@@ -8,6 +8,8 @@
 
 class Character {
 public:
+    Character(const std::string &type, float posX, float posY, int hp, int damage, int strength, int armor, int speed);
+
     virtual void move(float posX, float posY) = 0;
 
     virtual void attack() = 0;

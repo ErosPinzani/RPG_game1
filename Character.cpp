@@ -67,3 +67,7 @@ int Character::getSpeed() const {
 void Character::setSpeed(int speed) {
     Character::speed = speed;
 }
+
+Character::Character(const std::string &type, float posX, float posY, int hp, int damage, int strength, int armor,
+                     int speed) : type(type), posX(posX), posY(posY), hp(hp), damage(damage), strength(strength),
+                                  armor(armor), speed(speed) {}

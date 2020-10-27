@@ -31,3 +31,5 @@ void Obstacle::setHp(int hp) {
 void Obstacle::drop() {
 
 }
+
+Obstacle::Obstacle(float posX, float posY, int hp) : posX(posX), posY(posY), hp(hp) {}
