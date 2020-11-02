@@ -4,11 +4,18 @@
 
 #ifndef RPG_GAME_MAP_H
 #define RPG_GAME_MAP_H
-
+#include <vector>
 
 class Map {
 public:
     void generatemap() = 0;
+
+    static Map* getInstance();
+
+    std::vector<int> vectorM1;
+private:
+    Map();
+    static Map*instance;
 };
 
 
