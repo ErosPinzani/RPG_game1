@@ -9,7 +9,6 @@
 
 class Tile: public Map {
 public:
-    void generatemap() override;
 
     const std::string &getType() const;
 

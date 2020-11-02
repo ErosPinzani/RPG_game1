@@ -8,7 +8,7 @@
 
 class Map {
 public:
-    virtual void generatemap() = 0;
+    void generatemap() = 0;
 };
 
 

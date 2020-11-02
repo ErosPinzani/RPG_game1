@@ -3,3 +3,7 @@
 //
 
 #include "Map.h"
+
+void Map::generatemap() {
+
+}

@@ -19,7 +19,3 @@ bool Tile::isWalkable() const {
 void Tile::setWalkable(bool walkable) {
     Tile::walkable = walkable;
 }
-
-void Tile::generatemap() {
-
-}
