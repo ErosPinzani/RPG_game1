@@ -8,7 +8,7 @@
 
 class Map {
 public:
-    void generatemap() = 0;
+    void generatemap();
 
     static Map* getInstance();
 
