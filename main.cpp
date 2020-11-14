@@ -1,11 +1,10 @@
 #include <iostream>
 #include <SFMl/Graphics.hpp>
-#include <memory>
 
 int main() {
     sf::Window window;
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
-    window.create(sf::VideoMode(1500, 850), "My window");
+    window.create(sf::VideoMode(1500, 850), "RPG_game");
     while (window.isOpen()) {
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
