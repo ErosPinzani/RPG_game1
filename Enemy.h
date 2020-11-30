@@ -8,8 +8,8 @@
 
 class Enemy: public Character {
 public:
-    void move(float posX, float posY) override;
-    void attack() override;
+//    void move(float posX, float posY) override;
+ //   void attack() override;
 };
 
 

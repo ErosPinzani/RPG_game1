@@ -3,7 +3,7 @@
 //
 
 #include "Enemy.h"
-
+/*
 void Enemy::move(float posX, float posY) {
 
 }
@@ -11,3 +11,4 @@ void Enemy::move(float posX, float posY) {
 void Enemy::attack() {
 
 }
+*/

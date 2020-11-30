@@ -4,13 +4,17 @@
 
 #ifndef RPG_GAME_HERO_H
 #define RPG_GAME_HERO_H
+
 #include "Character.h"
 
 class Hero: public Character {
 public:
-    void move(float posX, float posY) override;
-    void attack() override;
-    void loot();
+
+
+    Hero();
+    void Update() override;
+    void UpdateMovement() override;
+    //void Loot();
 };
 
 

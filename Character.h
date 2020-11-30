@@ -4,59 +4,24 @@
 
 #ifndef RPG_GAME_CHARACTER_H
 #define RPG_GAME_CHARACTER_H
-#include <string>
+
+#include <SFML/Graphics.hpp>
+using namespace std;
 
 class Character {
 public:
-    Character(const std::string &type, float posX, float posY, int hp, int damage, int strength, int armor, int speed);
-
-    virtual ~Character();
-
-    virtual void move(float posX, float posY) = 0;
-
-    virtual void attack() = 0;
-
-    const std::string &getType() const;
-
-    void setType(const std::string &type);
-
-    float getPosX() const;
-
-    void setPosX(float posX);
-
-    float getPosY() const;
-
-    void setPosY(float posY);
-
-    int getHp() const;
-
-    void setHp(int hp);
-
-    int getDamage() const;
-
-    void setDamage(int damage);
-
-    int getStrength() const;
-
-    void setStrength(int strength);
-
-    int getArmor() const;
-
-    void setArmor(int armor);
-
-    int getSpeed() const;
-
-    void setSpeed(int speed);
-
-protected:
-    std::string type;
-    float posX;
-    float posY;
+    sf::RectangleShape rect;
+    sf::Sprite sprite;
+    sf::Text text;
     int hp;
-    int damage;
-    int strength;
-    int armor;
-    int speed;
+    float movementSpeed;
+    int attackDamage;
+    int counterWalking = 0;
+    int direction = 0; //1 - up, 2 - down, 3 - left, 4 - right
+
+    virtual void Update() = 0;
+    virtual void UpdateMovement() = 0;
+
 };
 
 
