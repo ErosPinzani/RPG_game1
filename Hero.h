@@ -9,7 +9,7 @@
 
 class Hero: public Character {
 public:
-
+    int HeroChoice; //1.melee 2.SRanged 3.AoeRanged
 
     Hero();
     void Update() override;

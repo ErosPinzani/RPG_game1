@@ -13,6 +13,17 @@ int main() {
     class Hero Hero1;
     class Enemy Enemy1;
 
+    // scelta personaggio
+    if (Hero1.HeroChoice == 1) {
+        //texture melee
+    }
+    else if (Hero1.HeroChoice == 2) {
+        //texture SRanged
+    }
+    else if (Hero1.HeroChoice == 3) {
+        //texture AoeRanged
+    }
+
     while (window.isOpen()) {
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;

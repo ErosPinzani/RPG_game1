@@ -5,7 +5,7 @@
 #include "Hero.h"
 
 Hero::Hero() {
-    hp =20;
+    hp = 20;
     movementSpeed = 5;
     attackDamage = 5;
     rect.setSize(sf::Vector2f(48, 64));
