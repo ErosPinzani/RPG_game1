@@ -4,12 +4,19 @@
 
 #ifndef RPG_GAME_ENEMY_H
 #define RPG_GAME_ENEMY_H
+
 #include "Character.h"
+#include "Random.h"
 
 class Enemy: public Character {
 public:
-//    void move(float posX, float posY) override;
- //   void attack() override;
+    int movementLength = 20;
+    int counter = 0;
+    bool alive = true;
+
+    Enemy();
+    void Update() override;
+    void UpdateMovement() override;
 };
 
 
