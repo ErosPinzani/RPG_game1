@@ -4,28 +4,21 @@
 
 #ifndef RPG_GAME_MELEEWEAPON_H
 #define RPG_GAME_MELEEWEAPON_H
-#include "Weapon.h"
 
-class MeleeWeapon:public Weapon {
+#include <SFML/Graphics.hpp>
+
+class MeleeWeapon {
 public:
-    void shoot() override;
+    sf::RectangleShape rect;
+    sf::Sprite sprite;
 
-    float getRange() const;
+    float movementSpeed = 5;
+    int attackDamage = 5;
 
-    void setRange(float range);
+    MeleeWeapon();
+    void Update();
+    void UpdateMovement();
 
-    int getPower() const;
-
-    void setPower(int power);
-
-    bool isHit() const;
-
-    void setHit(bool hit);
-
-private:
-    float range;
-    int power;
-    bool hit;
 };
 
 

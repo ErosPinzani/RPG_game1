@@ -4,30 +4,31 @@
 
 #include "MeleeWeapon.h"
 
-float MeleeWeapon::getRange() const {
-    return range;
+MeleeWeapon::MeleeWeapon() {
+    rect.setSize(sf::Vector2f(48*3, 64*3));
+    rect.setPosition(750-72, 425-96);
+    rect.setFillColor(sf::Color::Transparent);
+    //sprite.setTextureRect(sf::IntRect(0, 0, 48, 64));
 }
 
-void MeleeWeapon::setRange(float range) {
-    MeleeWeapon::range = range;
+void MeleeWeapon::Update() {
+    sprite.setPosition(rect.getPosition());
 }
 
-int MeleeWeapon::getPower() const {
-    return power;
-}
+void MeleeWeapon::UpdateMovement() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+        rect.move(0, -movementSpeed);
+    }
 
-void MeleeWeapon::setPower(int power) {
-    MeleeWeapon::power = power;
-}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+        rect.move(0, movementSpeed);
+    }
 
-bool MeleeWeapon::isHit() const {
-    return hit;
-}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+        rect.move(-movementSpeed, 0);
+    }
 
-void MeleeWeapon::setHit(bool hit) {
-    MeleeWeapon::hit = hit;
-}
-
-void MeleeWeapon::shoot() {
-
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+        rect.move(movementSpeed, 0);
+    }
 }
