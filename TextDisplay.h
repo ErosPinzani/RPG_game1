@@ -5,14 +5,17 @@
 #ifndef RPG_GAME_TEXTDISPLAY_H
 #define RPG_GAME_TEXTDISPLAY_H
 
+#include "SFML/Graphics.hpp"
 
-#include "Character.h"
-
-class TextDisplay: public Character {
+class TextDisplay {
 public:
-    string myString;
+    sf::RectangleShape rect;
+    sf::Sprite sprite;
+    sf::Text text;
+    std::string myString;
     int counter = 0;
     int lifeTime = 100;
+    int movementSpeed = 1;
     bool destroy = false;
 
     TextDisplay();

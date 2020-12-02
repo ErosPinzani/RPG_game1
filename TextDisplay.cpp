@@ -5,7 +5,6 @@
 #include "TextDisplay.h"
 
 TextDisplay::TextDisplay() {
-    movementSpeed = 1;
     text.setFillColor(sf::Color::Red);
     text.setCharacterSize(15);
     text.setString(myString);
