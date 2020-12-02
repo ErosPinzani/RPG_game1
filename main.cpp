@@ -28,13 +28,13 @@ int main()
 
     //set icon
     sf::Image icon;
-    if(!icon.loadFromFile( R"()"))
+    if(!icon.loadFromFile( R"(C:\Users\franc\CLionProjects\RPG_game\Resources\role-playing-game.png)"))
         return EXIT_FAILURE;
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     //background texture
     sf::Texture textureBackground;
-    if(!textureBackground.loadFromFile(R"()"))
+    if(!textureBackground.loadFromFile(R"(C:\Users\franc\CLionProjects\RPG_game\Resources\Rpg.textureSfondo.jpg)"))
         return EXIT_FAILURE;
     sf::Sprite spriteBackground (textureBackground);
     spriteBackground.setTextureRect(sf::IntRect(0,0,1500,850));
@@ -42,27 +42,24 @@ int main()
 
     //text texture
     sf::Font font;
-    if(!font.loadFromFile( R"()"))
+    if(!font.loadFromFile( R"(C:\Users\franc\CLionProjects\RPG_game\Resources\SuperLegendBoy-4w8Y.ttf)"))
         return EXIT_FAILURE;
 
-    //player texture
+    //Hero texture
     sf::Texture textureHero;
-    if(!textureHero.loadFromFile(R"()"))
+    if(!textureHero.loadFromFile(R"(C:\Users\franc\CLionProjects\RPG_game\Resources\Rpg.textureHero.png)"))
         return EXIT_FAILURE;
 
     //enemy texture
     sf::Texture textureEnemy;
-    if(!textureEnemy.loadFromFile(R"()"))
+    if(!textureEnemy.loadFromFile(R"(C:\Users\franc\CLionProjects\RPG_game\Resources\UnHero.png)"))
         return EXIT_FAILURE;
 
     //Bullet texture
     sf::Texture textureAoeBullet;
-    if(!textureAoeBullet.loadFromFile(R"()"))
+    if(!textureAoeBullet.loadFromFile(R"(C:\Users\franc\CLionProjects\RPG_game\Resources\Projectiles_preview_rev_1.png)"))
         return EXIT_FAILURE;
 
-    sf::Texture textureStBullet;
-    if(!textureStBullet.loadFromFile(R"()"))
-        return EXIT_FAILURE;
 
     //Hero object
     class Hero Hero1;
@@ -145,7 +142,7 @@ int main()
         }
         cout << Hero1.hp << endl;
 
-        //projectiles collisions
+        //AoeBullet collisions
         counter = 0;
         for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
             counter2 = 0;
@@ -201,7 +198,7 @@ int main()
             counter++;
         }
 
-        //delete projectiles
+        //delete AoeBullet
         counter = 0;
         for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
             if (AoeBulletArray[counter].destroy) {
@@ -228,20 +225,20 @@ int main()
             enemyArray.push_back(Enemy1);
         }
 
-        //fire projectiles (left click)
-        if (elapsed1.asSeconds() >= 0.5) {
+        //fire Bullet (left click)
+        if (elapsed1.asSeconds() >= 0.1) {
             clock.restart();
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-                    AoeBullet1.rect.setPosition(Hero1.rect.getPosition().x + Hero1.rect.getSize().x/2 - AoeBullet1.rect.getSize().x/2, Hero1.rect.getPosition().y + Hero1.rect.getSize().y/2 - AoeBullet1.rect.getSize().y/2);
-                AoeBullet1.direction = AoeBullet1.direction;
+                AoeBullet1.rect.setPosition(Hero1.rect.getPosition().x + Hero1.rect.getSize().x/2 - AoeBullet1.rect.getSize().x/2, Hero1.rect.getPosition().y + Hero1.rect.getSize().y/2 - AoeBullet1.rect.getSize().y/2);
+                AoeBullet1.direction = Hero1.direction;
                 AoeBulletArray.push_back(AoeBullet1);
             }
         }
 
-        //draw projectiles
+        //draw AoeBullet
         counter = 0;
         for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
-            AoeBulletArray[counter].Update(); //update projectile
+            AoeBulletArray[counter].Update(); //update AoeBullet
             window.draw(AoeBulletArray[counter].sprite);
             counter++;
         }

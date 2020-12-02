@@ -7,9 +7,9 @@
 AoeBullet::AoeBullet() {
     movementSpeed = 8;
     attackDamage = 8;
-    rect.setSize(sf::Vector2f(10, 10));
+    rect.setSize(sf::Vector2f(35, 34));
     rect.setPosition(0, 0);
-    sprite.setTextureRect(sf::IntRect(0,0,55,42));
+    sprite.setTextureRect(sf::IntRect(0,0,35,34));
 }
 
 void AoeBullet::Update() {
