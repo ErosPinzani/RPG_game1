@@ -14,11 +14,9 @@ Enemy::Enemy() {
     sprite.setTextureRect(sf::IntRect(0, 31.7*2, 31.7, 31.7));
 }
 
-void Enemy::Update() {
-    sprite.setPosition(rect.getPosition());
-}
-
 void Enemy::UpdateMovement() {
+    sprite.setPosition(rect.getPosition());
+
     if (direction == 1){ //up
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*3, 31.7, 31.7));

@@ -19,8 +19,7 @@ public:
     int counterWalking = 0;
     int direction = 0; //1 - up, 2 - down, 3 - left, 4 - right
 
-    virtual void Update() = 0;
-    virtual void UpdateMovement() = 0;
+    virtual void UpdateMovement();
 
 };
 

@@ -15,7 +15,6 @@ public:
     bool alive = true;
 
     Enemy();
-    void Update() override;
     void UpdateMovement() override;
 };
 
