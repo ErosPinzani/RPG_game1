@@ -3,9 +3,13 @@
 //
 
 #include "googletest/include/gtest/gtest.h"
-#include "googletest/src/gtest-internal-inl.h"
+
+TEST(pippo, bau){
+
+}
 
 int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
+    testing::InitGoogleTest();
     return RUN_ALL_TESTS();
 }
+

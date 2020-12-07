@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(GOOGLETEST_VERSION 1.10.0)
 
-add_subdirectory(googletest)
+add_subdirectory(googletest/)
 
 set(gtest_DIR, googletest/)
 include_directories(${gtest_DIR}/include ${gtest_DIR})
