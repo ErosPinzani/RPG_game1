@@ -8,28 +8,32 @@
 void Character::UpdateMovement() {
     sprite.setPosition(rect.getPosition());
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && Character::Walkable(1)){
+        direction = 1;
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*3, 31.7, 31.7));
-        direction = 1;
+
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& Character::Walkable(2)){
+        direction = 2;
         rect.move(0, movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 0, 31.7, 31.7));
-        direction = 2;
+
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && Character::Walkable(3)){
+        direction = 3;
         rect.move(-movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7, 31.7, 31.7));
-        direction = 3;
+
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D )&& Character::Walkable(4)){
+        direction = 4;
         rect.move(movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*2, 31.7, 31.7));
-        direction = 4;
+
     }
 
     counterWalking++;
@@ -37,11 +41,22 @@ void Character::UpdateMovement() {
         counterWalking = 0;
 }
 
-bool Character::Walkable() {
-    int x = rect.getPosition().x / 50;
-    int y = rect.getPosition().y / 50;
-    int pos = x + y * 48;
-    Map::getInstance()->vectorM1;
-
-
+bool Character::Walkable (int direction) {
+    int x =  rect.getPosition().x;
+    int y = rect.getPosition().y;
+    if (direction == 1){
+        y = (y - movementSpeed) / 50;
+    }
+    if (direction == 2){
+        y = (y + movementSpeed) / 50;
+    }
+    if (direction == 3){
+        x = (x - movementSpeed) / 50;
+    }
+    if (direction == 4){
+        x = (x + movementSpeed) / 50;
+    }
+    int pos = x * 48 + y ;
+    if (Map::getInstance()->vectorM1[pos] == 0)
+        return true;
 }
