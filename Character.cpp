@@ -9,31 +9,27 @@ void Character::UpdateMovement() {
     sprite.setPosition(rect.getPosition());
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && Character::Walkable(1)){
-        direction = 1;
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*3, 31.7, 31.7));
-
+        direction = 1;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& Character::Walkable(2)){
-        direction = 2;
         rect.move(0, movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 0, 31.7, 31.7));
-
+        direction = 2;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && Character::Walkable(3)){
-        direction = 3;
         rect.move(-movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7, 31.7, 31.7));
-
+        direction = 3;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D )&& Character::Walkable(4)){
-        direction = 4;
         rect.move(movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*2, 31.7, 31.7));
-
+        direction = 4;
     }
 
     counterWalking++;
@@ -56,7 +52,10 @@ bool Character::Walkable (int direction) {
     if (direction == 4){
         x = (x + movementSpeed) / 50;
     }
-    int pos = x * 48 + y ;
+    int pos = (x * 48) + y ;
     if (Map::getInstance()->vectorM1[pos] == 0)
         return true;
+    else
+        return false;
+
 }
