@@ -9,6 +9,8 @@
 #include "StBullet.h"
 #include "MeleeWeapon.h"
 #include "TextDisplay.h"
+#include "RenderMap.h"
+#include "Map.h"
 
 using namespace std;
 
@@ -28,13 +30,13 @@ int main()
 
     //set icon
     sf::Image icon;
-    if(!icon.loadFromFile( R"(Resources\role-playing-game.png)"))
+    if(!icon.loadFromFile( R"(C:\Users\erosp\Desktop\RPG_game\Resources\role-playing-game.png)"))
         return EXIT_FAILURE;
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     //background texture
     sf::Texture textureBackground;
-    if(!textureBackground.loadFromFile(R"(Resources\Rpg.textureSfondo.jpg)"))
+    if(!textureBackground.loadFromFile(R"(C:\Users\erosp\Desktop\RPG_game\Resources\Rpg.textureSfondo.jpg)"))
         return EXIT_FAILURE;
     sf::Sprite spriteBackground (textureBackground);
     spriteBackground.setTextureRect(sf::IntRect(0,0,1500,850));
@@ -42,22 +44,22 @@ int main()
 
     //text texture
     sf::Font font;
-    if(!font.loadFromFile( R"(Resources\SuperLegendBoy-4w8Y.ttf)"))
+    if(!font.loadFromFile( R"(C:\Users\erosp\Desktop\RPG_game\Resources\SuperLegendBoy-4w8Y.ttf)"))
         return EXIT_FAILURE;
 
     //Hero texture
     sf::Texture textureHero;
-    if(!textureHero.loadFromFile(R"(Resources\Rpg.textureHero.png)"))
+    if(!textureHero.loadFromFile(R"(C:\Users\erosp\Desktop\RPG_game\Resources\Rpg.textureHero.png)"))
         return EXIT_FAILURE;
 
     //enemy texture
     sf::Texture textureEnemy;
-    if(!textureEnemy.loadFromFile(R"(Resources\UnHero.png)"))
+    if(!textureEnemy.loadFromFile(R"(C:\Users\erosp\Desktop\RPG_game\Resources\UnHero.png)"))
         return EXIT_FAILURE;
 
     //Bullet texture
     sf::Texture textureAoeBullet;
-    if(!textureAoeBullet.loadFromFile(R"(Resources\Projectiles_preview_rev_1.png)"))
+    if(!textureAoeBullet.loadFromFile(R"(C:\Users\erosp\Desktop\RPG_game\Resources\Projectiles_preview_rev_1.png)"))
         return EXIT_FAILURE;
 
 
@@ -100,6 +102,9 @@ int main()
     class TextDisplay TextDisplay1;
     TextDisplay1.text.setFont(font);
 
+    //map
+    class RenderMap RenderMap1;
+
 
     //start game loop
     while (window.isOpen()) {
@@ -113,8 +118,13 @@ int main()
         //clear screen
         window.clear();
 
+        //render map
+        Map::getInstance()->vectorM1;
+        RenderMap1.generate(sf::Vector2u(50, 50), Map::getInstance()->vectorM1, RenderMap1.map_width, RenderMap1.map_height);
+        window.draw(RenderMap1);
+
         //draw background
-        window.draw(spriteBackground);
+        //window.draw(spriteBackground);
 
         //cin HeroChoice
 
