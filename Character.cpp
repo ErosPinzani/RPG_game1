@@ -3,6 +3,7 @@
 //
 
 #include "Character.h"
+#include "Map.h"
 
 void Character::UpdateMovement() {
     sprite.setPosition(rect.getPosition());
@@ -34,4 +35,13 @@ void Character::UpdateMovement() {
     counterWalking++;
     if (counterWalking == 2)
         counterWalking = 0;
+}
+
+bool Character::Walkable() {
+    int x = rect.getPosition().x / 50;
+    int y = rect.getPosition().y / 50;
+    int pos = x + y * 48;
+    Map::getInstance()->vectorM1;
+
+
 }
