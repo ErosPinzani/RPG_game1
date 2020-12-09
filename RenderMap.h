@@ -26,7 +26,7 @@ public:
     RenderMap() {};
     void generate(sf::Vector2u tileSize, std::vector <int> tiles, int width, int height) noexcept(false) {
         // load the tiles texture
-        if(!texture.loadFromFile(R"(C:\Users\erosp\Desktop\RPG_game\Resources\Images.jpg)"))/*C:\Users\franc\CLionProjects\RPG_game\Resources\Images.jpg*/ {
+        if(!texture.loadFromFile(R"(C:\Users\franc\CLionProjects\RPG_game\Resources\Images.jpg)"))/*C:\Users\erosp\Desktop\RPG_game\Resources\Images.jpg*/ {
             throw std::runtime_error("File not found");
         }
 
