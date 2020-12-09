@@ -21,7 +21,7 @@ protected:
     }
 public:
     int map_width = 48;
-    int map_height = 20;
+    int map_height = 21;
 
     RenderMap() {};
     void generate(sf::Vector2u tileSize, std::vector <int> tiles, int width, int height) noexcept(false) {

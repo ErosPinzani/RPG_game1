@@ -9,7 +9,6 @@
 class AoeBullet: public Bullet {
 public:
     AoeBullet();
-    void Update() override;
 };
 
 

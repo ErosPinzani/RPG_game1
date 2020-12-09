@@ -19,7 +19,8 @@ public:
     int counterLifetime = 0;
     int lifetime = 100;
 
-    virtual void Update() = 0;
+    virtual void Update();
+    void Walkable(int direction);
 };
 
 

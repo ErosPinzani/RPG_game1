@@ -23,6 +23,21 @@ int main()
     sf::Clock clock;
     sf::Clock clock2;
     sf::Clock clock3;
+    int n = 24; //enemy number
+    std::vector<std::vector<int>> enemyPos = std::vector<std::vector<int>> ({
+            std::vector<int>({501, 453}), std::vector<int>({501, 453}),
+            std::vector<int>({391, 678}), std::vector<int>({391, 678}),
+            std::vector<int>({1056, 718}), std::vector<int>({1056, 718}),
+            std::vector<int>({916, 968}), std::vector<int>({916, 968}),
+            std::vector<int>({236, 908}), std::vector<int>({236, 908}),
+            std::vector<int>({106, 388}), std::vector<int>({106, 388}),
+            std::vector<int>({1456, 968}), std::vector<int>({1456, 968}),
+            std::vector<int>({2316, 718}), std::vector<int>({2316, 718}),
+            std::vector<int>({1561, 633}), std::vector<int>({1561, 633}),
+            std::vector<int>({526, 53}), std::vector<int>({526, 53}),
+            std::vector<int>({766, 358}), std::vector<int>({766, 358}),
+            std::vector<int>({1351, 518}), std::vector<int>({1351, 518}),
+    });
 
     //create window
     sf::RenderWindow window(sf::VideoMode(1500, 850), "RPG Game");
@@ -124,6 +139,8 @@ int main()
         //clear screen
         window.clear();
 
+        //cout << Hero1.rect.getPosition().x <<"   "<<Hero1.rect.getPosition().y<< endl ;
+
         //render map
         Map::getInstance()->vectorM1;
         RenderMap1.generate(sf::Vector2u(50, 50), Map::getInstance()->vectorM1, RenderMap1.map_width, RenderMap1.map_height);
@@ -156,7 +173,7 @@ int main()
                 counter++;
             }
         }
-        cout << Hero1.hp << endl;
+        //cout << Hero1.hp << endl;
 
         //AoeBullet collisions
         counter = 0;
@@ -235,10 +252,11 @@ int main()
         }
 
 
-        //spawn new enemies (y)
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y)) {
-            Enemy1.rect.setPosition(generateRandom(window.getSize().x), generateRandom(window.getSize().y));
+        //spawn new enemies
+        while(n > 0){
+            Enemy1.rect.setPosition(enemyPos[n-1][0], enemyPos[n-1][1]);
             enemyArray.push_back(Enemy1);
+            n--;
         }
 
         //fire Bullet (left click)
@@ -262,7 +280,6 @@ int main()
         //draw enemies
         counter = 0;
         for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-
             enemyArray[counter].UpdateMovement();
             window.draw(enemyArray[counter].sprite);
             counter++;

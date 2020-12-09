@@ -9,7 +9,7 @@ Hero::Hero() {
     movementSpeed = 5;
     attackDamage = 5;
     rect.setSize(sf::Vector2f(31.7, 31.7));
-    rect.setPosition(750-24, 425-32);
+    rect.setPosition(200-24, 200-32);
     rect.setFillColor(sf::Color::Blue);
     sprite.setTextureRect(sf::IntRect(0, 0, 31.7, 31.7));
 }
