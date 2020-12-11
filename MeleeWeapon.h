@@ -17,8 +17,6 @@ public:
 
     MeleeWeapon();
     void Update();
-    void UpdateMovement();
-
 };
 
 

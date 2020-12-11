@@ -23,6 +23,7 @@ int main()
     sf::Clock clock;
     sf::Clock clock2;
     sf::Clock clock3;
+    sf::Clock clock4;
     int n = 24; //enemy number
     std::vector<std::vector<int>> enemyPos = std::vector<std::vector<int>> ({
             std::vector<int>({501, 453}), std::vector<int>({501, 453}),
@@ -51,28 +52,28 @@ int main()
 
     //set icon
     sf::Image icon;
-    if(!icon.loadFromFile( R"(Resources\role-playing-game.png)"))/*C:\Users\franc\CLionProjects\RPG_game\Resources\role-playing-game.png*/
+    if(!icon.loadFromFile( R"(Resources\role-playing-game.png)"))
         return EXIT_FAILURE;
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     //text texture
     sf::Font font;
-    if(!font.loadFromFile( R"(Resources\SuperLegendBoy-4w8Y.ttf)"))/*C:\Users\franc\CLionProjects\RPG_game\Resources\SuperLegendBoy-4w8Y.ttf*/
+    if(!font.loadFromFile( R"(Resources\SuperLegendBoy-4w8Y.ttf)"))
         return EXIT_FAILURE;
 
     //Hero texture
     sf::Texture textureHero;
-    if(!textureHero.loadFromFile(R"(Resources\Rpg.textureHero.png)"))/*C:\Users\franc\CLionProjects\RPG_game\Resources\Rpg.textureHero.png*/
+    if(!textureHero.loadFromFile(R"(Resources\Rpg.textureHero.png)"))
         return EXIT_FAILURE;
 
     //enemy texture
     sf::Texture textureEnemy;
-    if(!textureEnemy.loadFromFile(R"(Resources\UnHero.png)"))/*C:\Users\franc\CLionProjects\RPG_game\Resources\UnHero.png*/
+    if(!textureEnemy.loadFromFile(R"(Resources\UnHero.png)"))
         return EXIT_FAILURE;
 
     //Bullet texture
     sf::Texture textureAoeBullet;
-    if(!textureAoeBullet.loadFromFile(R"(Resources\Projectiles_preview_rev_1.png)"))/*C:\Users\franc\CLionProjects\RPG_game\Resources\Projectiles_preview_rev_1.png*/
+    if(!textureAoeBullet.loadFromFile(R"(Resources\Projectiles_preview_rev_1.png)"))
         return EXIT_FAILURE;
 
 
@@ -82,7 +83,6 @@ int main()
 
     //melee weapon object
     class MeleeWeapon MeleeWeapon1;
-    //Player1.sprite.setTexture(texturePlayer);
 
     //Bullet vector array
     vector<AoeBullet>::const_iterator iter;
@@ -144,6 +144,7 @@ int main()
         sf::Time elapsed1 = clock.getElapsedTime();
         sf::Time elapsed2 = clock2.getElapsedTime();
         sf::Time elapsed3 = clock3.getElapsedTime();
+        sf::Time elapsed4 = clock4.getElapsedTime();
 
         //enemy collision with player
         if (elapsed2.asSeconds() >= 0.5) {
@@ -164,6 +165,60 @@ int main()
         }
         //cout << Hero1.hp << endl;
 
+        //enemy aggro AI
+        counter = 0;
+        for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
+            if (enemyArray[counter].aggro) {
+                if (elapsed4.asSeconds() >= 0.05) {
+                    clock4.restart();
+                    int tempRand = generateRandom(3);
+                    if (tempRand == 1) {
+
+                        //hero to up
+                        if ((Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero1.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
+                            enemyArray[counter].direction = 1;
+                        }
+                        //hero to down
+                        if ((Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero1.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
+                            enemyArray[counter].direction = 2;
+                        }
+                        //hero to right
+                        if ((Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero1.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
+                            enemyArray[counter].direction = 3;
+                        }
+                        //hero to left
+                        if ((Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero1.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
+                            enemyArray[counter].direction = 4;
+                        }
+                    }
+
+                    //enemy chases Hero
+                    else if (tempRand == 2) {
+                        if (Hero1.rect.getPosition().y < enemyArray[counter].rect.getPosition().y)
+                            enemyArray[counter].direction = 1;
+                        else if (Hero1.rect.getPosition().y > enemyArray[counter].rect.getPosition().y)
+                            enemyArray[counter].direction = 2;
+                        else if (Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x)
+                            enemyArray[counter].direction = 3;
+                        else if (Hero1.rect.getPosition().x > enemyArray[counter].rect.getPosition().x)
+                            enemyArray[counter].direction = 4;
+                    }
+
+                    else {
+                        if (Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x)
+                            enemyArray[counter].direction = 3;
+                        else if (Hero1.rect.getPosition().x > enemyArray[counter].rect.getPosition().x)
+                            enemyArray[counter].direction = 4;
+                        else if (Hero1.rect.getPosition().y < enemyArray[counter].rect.getPosition().y)
+                            enemyArray[counter].direction = 1;
+                        else if (Hero1.rect.getPosition().y > enemyArray[counter].rect.getPosition().y)
+                            enemyArray[counter].direction = 2;
+                    }
+                }
+            }
+            counter++;
+        }
+
         //AoeBullet collisions
         counter = 0;
         for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
@@ -180,14 +235,17 @@ int main()
                     enemyArray[counter2].hp -= AoeBulletArray[counter].attackDamage;
                     if (enemyArray[counter2].hp <= 0)
                         enemyArray[counter2].alive = false;
+
+                    //aggro
+                    enemyArray[counter2].aggro = true;
                 }
                 counter2++;
             }
             counter++;
         }
 
-        if (elapsed1.asSeconds() >= 0.4) {
-            clock.restart();
+        if (elapsed3.asSeconds() >= 0.5) {
+            clock3.restart();
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
                 //enemy collision with melee weapon
                 counter = 0;
@@ -276,7 +334,6 @@ int main()
 
         //update MeleeWeapon
         MeleeWeapon1.Update();
-        MeleeWeapon1.UpdateMovement();
 
         //draw melee weapon
         window.draw(MeleeWeapon1.rect);

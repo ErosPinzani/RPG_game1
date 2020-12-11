@@ -13,6 +13,7 @@ public:
     int movementLength = 20;
     int counter = 0;
     bool alive = true;
+    bool aggro = false;
 
     Enemy();
     void UpdateMovement() override;
