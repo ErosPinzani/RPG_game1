@@ -14,6 +14,7 @@ public:
     sf::Sprite sprite;
     sf::Text text;
     int hp;
+    int maxhp;
     float movementSpeed;
     int attackDamage;
     int counterWalking = 0;

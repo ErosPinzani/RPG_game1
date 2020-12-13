@@ -6,6 +6,7 @@
 
 Enemy::Enemy() {
     hp = 15;
+    maxhp = 15;
     movementSpeed = 2;
     attackDamage = 2;
     rect.setSize(sf::Vector2f(31.7, 31.7));
@@ -16,6 +17,7 @@ Enemy::Enemy() {
 
 void Enemy::UpdateMovement() {
     sprite.setPosition(rect.getPosition());
+    text.setPosition(rect.getPosition().x - rect.getSize().x/2 - 5, rect.getPosition().y - rect.getSize().y/2 - 5);
 
     if (direction == 1 && Character::Walkable(1)){ //up
         rect.move(0, -movementSpeed);

@@ -56,10 +56,14 @@ int main()
         return EXIT_FAILURE;
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    //text texture
+    //text font
     sf::Font font;
     if(!font.loadFromFile( R"(Resources\SuperLegendBoy-4w8Y.ttf)"))
         return EXIT_FAILURE;
+
+    //hero HP text
+    sf::Text textHP("HP ", font, 20);
+    textHP.setFillColor(sf::Color::Green);
 
     //Hero texture
     sf::Texture textureHero;
@@ -105,7 +109,9 @@ int main()
     //enemy object
     class Enemy Enemy1;
     Enemy1.sprite.setTexture(textureEnemy);
-    enemyArray.push_back(Enemy1);
+    Enemy1.text.setFont(font);
+    Enemy1.text.setCharacterSize(12);
+    Enemy1.text.setFillColor(sf::Color::Red);
 
     //text vector array
     vector<TextDisplay>::const_iterator iter8;
@@ -332,6 +338,14 @@ int main()
             counter++;
         }
 
+        //draw enemy's hp
+        counter = 0;
+        for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
+            enemyArray[counter].text.setString("HP " + to_string(enemyArray[counter].hp) + "/" + to_string(enemyArray[counter].maxhp));
+            window.draw(enemyArray[counter].text);
+            counter++;
+        }
+
         //update MeleeWeapon
         MeleeWeapon1.Update();
 
@@ -348,8 +362,6 @@ int main()
         //draw hero
         window.draw(Hero1.sprite);
 
-
-
         //draw text
         counter = 0;
         for (iter8 = textDisplayArray.begin(); iter8 != textDisplayArray.end(); iter8++) {
@@ -357,6 +369,11 @@ int main()
             window.draw(textDisplayArray[counter].text);
             counter++;
         }
+
+        //hero HP text
+        textHP.setString("HP " + to_string(Hero1.hp) + "/" + to_string(Hero1.maxhp));
+        window.draw(textHP);
+        textHP.setPosition(Hero1.rect.getPosition().x - window.getSize().x/2, Hero1.rect.getPosition().y - window.getSize().y/2);
 
         //update the window
         window.display();

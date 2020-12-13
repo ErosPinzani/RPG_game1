@@ -6,6 +6,7 @@
 
 Hero::Hero() {
     hp = 20;
+    maxhp = 20;
     movementSpeed = 5;
     attackDamage = 5;
     rect.setSize(sf::Vector2f(31.7, 31.7));
