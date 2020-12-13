@@ -14,6 +14,7 @@ public:
     int counter = 0;
     bool alive = true;
     bool aggro = false;
+    bool isBlood = false;
 
     Enemy();
     void UpdateMovement() override;

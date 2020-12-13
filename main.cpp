@@ -80,6 +80,10 @@ int main()
     if(!textureAoeBullet.loadFromFile(R"(Resources\Projectiles_preview_rev_1.png)"))
         return EXIT_FAILURE;
 
+    //blood texture
+    sf::Texture textureBlood;
+    if(!textureBlood.loadFromFile(R"(Resources/Blood.png)"))
+        return EXIT_FAILURE;
 
     //Hero object
     class Hero Hero1;
@@ -112,6 +116,17 @@ int main()
     Enemy1.text.setFont(font);
     Enemy1.text.setCharacterSize(12);
     Enemy1.text.setFillColor(sf::Color::Red);
+
+    //blood vector array
+    vector<Enemy>::const_iterator iter5;
+    vector<Enemy> bloodArray;
+
+    //blood object
+    class Enemy Blood1;
+    Blood1.isBlood = true;
+    Blood1.sprite.setTexture(textureBlood);
+    Blood1.sprite.setTextureRect(sf::IntRect(0, 0, 70, 53));
+    //bloodArray.push_back(Blood1);
 
     //text vector array
     vector<TextDisplay>::const_iterator iter8;
@@ -278,6 +293,11 @@ int main()
         counter = 0;
         for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
             if (!enemyArray[counter].alive) {
+
+                //create enemy blood stain
+                Blood1.sprite.setPosition(enemyArray[counter].rect.getPosition());
+                bloodArray.push_back(Blood1);
+
                 enemyArray.erase(iter4);
                 break;
             }
@@ -320,6 +340,13 @@ int main()
                 AoeBullet1.direction = Hero1.direction;
                 AoeBulletArray.push_back(AoeBullet1);
             }
+        }
+
+        //draw blood
+        counter = 0;
+        for (iter5 = bloodArray.begin(); iter5 != bloodArray.end(); iter5++) {
+            window.draw(bloodArray[counter].sprite);
+            counter++;
         }
 
         //draw AoeBullet
