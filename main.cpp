@@ -11,6 +11,7 @@
 #include "TextDisplay.h"
 #include "RenderMap.h"
 #include "Map.h"
+#include "PickUp.h"
 
 using namespace std;
 
@@ -65,6 +66,10 @@ int main()
     sf::Text textHP("HP ", font, 20);
     textHP.setFillColor(sf::Color::Green);
 
+    //coin text
+    sf::Text coinText("COIN ", font, 20);
+    coinText.setFillColor(sf::Color::Yellow);
+
     //Hero texture
     sf::Texture textureHero;
     if(!textureHero.loadFromFile(R"(Resources\Rpg.textureHero.png)"))
@@ -73,6 +78,11 @@ int main()
     //enemy texture
     sf::Texture textureEnemy;
     if(!textureEnemy.loadFromFile(R"(Resources\UnHero.png)"))
+        return EXIT_FAILURE;
+
+    //coin texture
+    sf::Texture textureCoin;
+    if(!textureCoin.loadFromFile(R"(Resources/Coin.png)"))
         return EXIT_FAILURE;
 
     //Bullet texture
@@ -126,7 +136,6 @@ int main()
     Blood1.isBlood = true;
     Blood1.sprite.setTexture(textureBlood);
     Blood1.sprite.setTextureRect(sf::IntRect(0, 0, 70, 53));
-    //bloodArray.push_back(Blood1);
 
     //text vector array
     vector<TextDisplay>::const_iterator iter8;
@@ -135,6 +144,14 @@ int main()
     //text object
     class TextDisplay TextDisplay1;
     TextDisplay1.text.setFont(font);
+
+    //pickUp vector array
+    vector<PickUp>::const_iterator iter11;
+    vector<PickUp> pickUpArray;
+
+    //coin object
+    class PickUp PickUp1;
+    PickUp1.sprite.setTexture(textureCoin);
 
     //map
     class RenderMap RenderMap1;
@@ -167,6 +184,17 @@ int main()
         sf::Time elapsed3 = clock3.getElapsedTime();
         sf::Time elapsed4 = clock4.getElapsedTime();
 
+        //player collides with PickUp items
+        counter = 0;
+        for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
+            if (Hero1.rect.getGlobalBounds().intersects(pickUpArray[counter].rect.getGlobalBounds())) {
+                if (pickUpArray[counter].isCoin)
+                    Hero1.coins += pickUpArray[counter].coinValue;
+                pickUpArray[counter].destroy = true;
+            }
+            counter++;
+        }
+
         //enemy collision with player
         if (elapsed2.asSeconds() >= 0.5) {
             clock2.restart();
@@ -184,7 +212,6 @@ int main()
                 counter++;
             }
         }
-        //cout << Hero1.hp << endl;
 
         //enemy aggro AI
         counter = 0;
@@ -294,6 +321,12 @@ int main()
         for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
             if (!enemyArray[counter].alive) {
 
+                //drop coin
+                if(generateRandom(3) == 1) {
+                    PickUp1.rect.setPosition(enemyArray[counter].rect.getPosition());
+                    pickUpArray.push_back(PickUp1);
+                }
+
                 //create enemy blood stain
                 Blood1.sprite.setPosition(enemyArray[counter].rect.getPosition());
                 bloodArray.push_back(Blood1);
@@ -324,6 +357,15 @@ int main()
             counter++;
         }
 
+        //delete PickUp items
+        counter = 0;
+        for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
+            if (pickUpArray[counter].destroy) {
+                pickUpArray.erase(iter11);
+                break;
+            }
+            counter++;
+        }
 
         //spawn new enemies
         while(n > 0){
@@ -346,6 +388,14 @@ int main()
         counter = 0;
         for (iter5 = bloodArray.begin(); iter5 != bloodArray.end(); iter5++) {
             window.draw(bloodArray[counter].sprite);
+            counter++;
+        }
+
+        //draw PickUp items
+        counter = 0;
+        for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
+            pickUpArray[counter].Update();
+            window.draw(pickUpArray[counter].sprite);
             counter++;
         }
 
@@ -377,7 +427,7 @@ int main()
         MeleeWeapon1.Update();
 
         //draw melee weapon
-        window.draw(MeleeWeapon1.rect);
+        //window.draw(MeleeWeapon1.rect);
 
         //update Hero
         Hero1.UpdateMovement();
@@ -401,6 +451,11 @@ int main()
         textHP.setString("HP " + to_string(Hero1.hp) + "/" + to_string(Hero1.maxhp));
         window.draw(textHP);
         textHP.setPosition(Hero1.rect.getPosition().x - window.getSize().x/2, Hero1.rect.getPosition().y - window.getSize().y/2);
+
+        //coin text
+        coinText.setString("COIN " + to_string(Hero1.coins));
+        window.draw(coinText);
+        coinText.setPosition(Hero1.rect.getPosition().x - window.getSize().x/2, Hero1.rect.getPosition().y - window.getSize().y/2 + 25);
 
         //update the window
         window.display();

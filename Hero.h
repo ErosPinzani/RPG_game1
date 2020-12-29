@@ -10,10 +10,9 @@
 class Hero: public Character {
 public:
     int HeroChoice; //1.melee 2.SRanged 3.AoeRanged
+    int coins = 0;
 
     Hero();
-
-    //void Loot();
 };
 
 
