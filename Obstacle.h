@@ -5,31 +5,14 @@
 #ifndef RPG_GAME_OBSTACLE_H
 #define RPG_GAME_OBSTACLE_H
 
+#include "Character.h"
 
-class Obstacle {
+class Obstacle: public Character {
 public:
-    Obstacle(float posX, float posY, int hp);
+    bool alive = true;
 
-    virtual ~Obstacle();
-
-    void drop();
-
-    float getPosX() const;
-
-    void setPosX(float posX);
-
-    float getPosY() const;
-
-    void setPosY(float posY);
-
-    int getHp() const;
-
-    void setHp(int hp);
-
-private:
-    float posX;
-    float posY;
-    int hp;
+    Obstacle();
+    void Update();
 };
 
 

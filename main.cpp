@@ -12,6 +12,7 @@
 #include "RenderMap.h"
 #include "Map.h"
 #include "PickUp.h"
+#include "Obstacle.h"
 
 using namespace std;
 
@@ -95,6 +96,11 @@ int main()
     if(!textureBlood.loadFromFile(R"(Resources/Blood.png)"))
         return EXIT_FAILURE;
 
+    //chest texture
+    sf::Texture textureChest;
+    if(!textureChest.loadFromFile(R"(Resources/Chest.png)"))
+        return EXIT_FAILURE;
+
     //Hero object
     class Hero Hero1;
     Hero1.sprite.setTexture(textureHero);
@@ -136,6 +142,15 @@ int main()
     Blood1.isBlood = true;
     Blood1.sprite.setTexture(textureBlood);
     Blood1.sprite.setTextureRect(sf::IntRect(0, 0, 70, 53));
+
+    //chest vector array
+    vector<Obstacle>::const_iterator iter9;
+    vector<Obstacle> chestArray;
+
+    //chest object
+    class Obstacle Chest1;
+    Chest1.sprite.setTexture(textureChest);
+    chestArray.push_back(Chest1);
 
     //text vector array
     vector<TextDisplay>::const_iterator iter8;
@@ -388,6 +403,13 @@ int main()
         counter = 0;
         for (iter5 = bloodArray.begin(); iter5 != bloodArray.end(); iter5++) {
             window.draw(bloodArray[counter].sprite);
+            counter++;
+        }
+
+        //draw chest
+        counter = 0;
+        for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
+            window.draw(chestArray[counter].sprite);
             counter++;
         }
 
