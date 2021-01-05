@@ -5,28 +5,32 @@
 #include "Character.h"
 #include "Map.h"
 
-void Character::UpdateMovement() {
+void Character::UpdateMovement(bool testing, sf::Keyboard::Key key) {
     sprite.setPosition(rect.getPosition());
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && Character::Walkable(1)){
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) && Character::Walkable(1))
+    || (testing && key == sf::Keyboard::W  && Character::Walkable(1))){
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*3, 31.7, 31.7));
         direction = 1;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && Character::Walkable(2)){
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) && Character::Walkable(2))
+        || (testing && key == sf::Keyboard::S  && Character::Walkable(2))){
         rect.move(0, movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 0, 31.7, 31.7));
         direction = 2;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && Character::Walkable(3)){
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) && Character::Walkable(3))
+        || (testing && key == sf::Keyboard::A  && Character::Walkable(3))){
         rect.move(-movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7, 31.7, 31.7));
         direction = 3;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && Character::Walkable(4)){
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) && Character::Walkable(4))
+        || (testing && key == sf::Keyboard::D  && Character::Walkable(4))){
         rect.move(movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*2, 31.7, 31.7));
         direction = 4;
@@ -59,4 +63,5 @@ bool Character::Walkable (int direction) {
     int pos = (y * 48) + x ;
     if (Map::getInstance()->vectorM1[pos] == 0)
         return true;
+    return false;
 }

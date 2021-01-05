@@ -20,7 +20,7 @@ public:
     int counterWalking = 0;
     int direction = 0; //1 - up, 2 - down, 3 - left, 4 - right
 
-    virtual void UpdateMovement();
+    virtual void UpdateMovement(bool testing = false, sf::Keyboard::Key key = sf::Keyboard::D);
     bool Walkable(int direction);
 
 };

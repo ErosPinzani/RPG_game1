@@ -8,6 +8,8 @@ Obstacle::Obstacle() {
     hp=5;
     sprite.setTextureRect(sf::IntRect(0, 0, 47, 45));
     sprite.setPosition(100, 100);
+    rect.setSize(sf::Vector2f(47, 45));
+    rect.setPosition(100, 100);
     rect.setFillColor(sf::Color::Blue);
 }
 

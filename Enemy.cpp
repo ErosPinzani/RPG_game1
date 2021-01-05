@@ -15,7 +15,7 @@ Enemy::Enemy() {
     sprite.setTextureRect(sf::IntRect(0, 31.7*2, 31.7, 31.7));
 }
 
-void Enemy::UpdateMovement() {
+void Enemy::UpdateMovement(bool testing, sf::Keyboard::Key key) {
     sprite.setPosition(rect.getPosition());
     text.setPosition(rect.getPosition().x - rect.getSize().x/2 - 5, rect.getPosition().y - rect.getSize().y/2 - 5);
 
@@ -37,10 +37,6 @@ void Enemy::UpdateMovement() {
     else if (direction == 4 && Character::Walkable(4)){ //right
         rect.move(movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*2, 31.7, 31.7));
-    }
-
-    else {
-        //no movement
     }
 
     counterWalking++;

@@ -288,7 +288,7 @@ int main()
         for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
             counter2 = 0;
             counter3 = 0;
-            for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
+            for (iter4 = enemyArray.begin(); iter4 !=enemyArray.end(); iter4++) {
                 if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(enemyArray[counter2].rect.getGlobalBounds())){
                     AoeBulletArray[counter].destroy = true;
 
@@ -309,7 +309,7 @@ int main()
 
             //chest collision
             for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
-                if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(chestArray[counter2].rect.getGlobalBounds())) {
+                if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(chestArray[counter3].rect.getGlobalBounds())) {
                     AoeBulletArray[counter].destroy = true;
                     chestArray[counter3].hp -= AoeBulletArray[counter].attackDamage;
                     if (chestArray[counter3].hp <= 0)
@@ -399,6 +399,9 @@ int main()
         counter = 0;
         for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
             if (!chestArray[counter].alive) {
+
+                //TODO cambiare texture
+
                 chestArray.erase(iter9);
                 break;
             }

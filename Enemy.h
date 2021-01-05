@@ -17,7 +17,7 @@ public:
     bool isBlood = false;
 
     Enemy();
-    void UpdateMovement() override;
+    void UpdateMovement(bool testing = false, sf::Keyboard::Key key = sf::Keyboard::D) override;
 };
 
 
