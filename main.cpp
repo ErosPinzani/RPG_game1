@@ -12,7 +12,7 @@
 #include "RenderMap.h"
 #include "Map.h"
 #include "PickUp.h"
-#include "Obstacle.h"
+#include "Chest.h"
 
 using namespace std;
 
@@ -144,20 +144,20 @@ int main()
     Blood1.sprite.setTextureRect(sf::IntRect(0, 0, 70, 53));
 
     //chest vector array
-    vector<Obstacle>::const_iterator iter9;
-    vector<Obstacle> chestArray;
+    vector<Chest>::const_iterator iter9;
+    vector<Chest> chestArray;
 
     //chest object
-    class Obstacle Chest1;
+    class Chest Chest1;
     Chest1.sprite.setTexture(textureChest);
     chestArray.push_back(Chest1);
 
     //open chest vector array
-    vector<Obstacle>::const_iterator iter6;
-    vector<Obstacle> openChestArray;
+    vector<Chest>::const_iterator iter6;
+    vector<Chest> openChestArray;
 
     //open chest object
-    class Obstacle OpenChest1;
+    class Chest OpenChest1;
     OpenChest1.sprite.setTexture(textureChest);
     OpenChest1.sprite.setTextureRect(sf::IntRect(0, 45.75*3, 50, 47.67));
 

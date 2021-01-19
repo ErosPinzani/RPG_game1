@@ -2,9 +2,9 @@
 // Created by erosp on 22/10/2020.
 //
 
-#include "Obstacle.h"
+#include "Chest.h"
 
-Obstacle::Obstacle() {
+Chest::Chest() {
     hp=5;
     sprite.setTextureRect(sf::IntRect(0, 0, 47, 45));
     sprite.setPosition(100, 100);
@@ -13,6 +13,6 @@ Obstacle::Obstacle() {
     rect.setFillColor(sf::Color::Blue);
 }
 
-void Obstacle::Update() {
+void Chest::Update() {
 
 }

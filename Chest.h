@@ -7,11 +7,11 @@
 
 #include "Character.h"
 
-class Obstacle: public Character {
+class Chest: public Character {
 public:
     bool alive = true;
 
-    Obstacle();
+    Chest();
     void Update();
 };
 
