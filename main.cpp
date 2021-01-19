@@ -198,7 +198,7 @@ int main()
         //clear screen
         window.clear();
 
-        cout << Hero1.rect.getPosition().x <<"   "<<Hero1.rect.getPosition().y<< endl ;
+        //cout << Hero1.rect.getPosition().x <<"   "<<Hero1.rect.getPosition().y<< endl ;
 
         //render map
         Map::getInstance()->vectorM1;
