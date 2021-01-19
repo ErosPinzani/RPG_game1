@@ -42,6 +42,21 @@ int main()
             std::vector<int>({766, 358}), std::vector<int>({766, 358}),
             std::vector<int>({1351, 518}), std::vector<int>({1351, 518}),
     });
+    int k = 12; //chest number
+    std::vector<std::vector<int>> chestPos = std::vector<std::vector<int>> ({
+            std::vector<int>({501, 453}),
+            std::vector<int>({391, 678}),
+            std::vector<int>({1056, 718}),
+            std::vector<int>({916, 968}),
+            std::vector<int>({236, 908}),
+            std::vector<int>({106, 388}),
+            std::vector<int>({1456, 968}),
+            std::vector<int>({2316, 718}),
+            std::vector<int>({1561, 633}),
+            std::vector<int>({526, 53}),
+            std::vector<int>({766, 358}),
+            std::vector<int>({1351, 518}),
+    });
 
     //create window
     sf::RenderWindow window(sf::VideoMode(1500, 850), "RPG Game");
@@ -147,16 +162,13 @@ int main()
     vector<Chest>::const_iterator iter9;
     vector<Chest> chestArray;
 
-    //chest object
-    class Chest Chest1;
-    Chest1.sprite.setTexture(textureChest);
-    chestArray.push_back(Chest1);
-
-    //open chest vector array
     vector<Chest>::const_iterator iter6;
     vector<Chest> openChestArray;
 
-    //open chest object
+    //chest object
+    class Chest Chest1;
+    Chest1.sprite.setTexture(textureChest);
+
     class Chest OpenChest1;
     OpenChest1.sprite.setTexture(textureChest);
     OpenChest1.sprite.setTextureRect(sf::IntRect(0, 45.75*3, 50, 47.67));
@@ -393,6 +405,27 @@ int main()
             counter++;
         }
 
+        //delete chest
+        counter = 0;
+        for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
+            if (!chestArray[counter].alive) {
+
+                //open chest texture
+                OpenChest1.sprite.setPosition(chestArray[counter].rect.getPosition());
+                openChestArray.push_back(OpenChest1);
+
+                //drop coin
+                if(generateRandom(1) == 1) {
+                    PickUp1.rect.setPosition(chestArray[counter].rect.getPosition());
+                    pickUpArray.push_back(PickUp1);
+                }
+
+                chestArray.erase(iter9);
+                break;
+            }
+            counter++;
+        }
+
         //delete PickUp items
         counter = 0;
         for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
@@ -403,26 +436,18 @@ int main()
             counter++;
         }
 
-        //delete chest
-        counter = 0;
-        for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
-            if (!chestArray[counter].alive) {
-
-                //open chest texture
-                OpenChest1.sprite.setPosition(chestArray[counter].rect.getPosition());
-                openChestArray.push_back(OpenChest1);
-
-                chestArray.erase(iter9);
-                break;
-            }
-            counter++;
-        }
-
         //spawn new enemies
         while(n > 0){
             Enemy1.rect.setPosition(enemyPos[n-1][0], enemyPos[n-1][1]);
             enemyArray.push_back(Enemy1);
             n--;
+        }
+
+        //spawn new chests
+        while(k > 0){
+            Chest1.rect.setPosition(chestPos[k-1][0], chestPos[k-1][1]);
+            chestArray.push_back(Chest1);
+            k--;
         }
 
         //fire Bullet (left click)
@@ -445,6 +470,7 @@ int main()
         //draw chest
         counter = 0;
         for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
+            chestArray[counter].Update();
             window.draw(chestArray[counter].sprite);
             counter++;
         }
