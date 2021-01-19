@@ -408,7 +408,6 @@ int main()
         for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
             if (!chestArray[counter].alive) {
 
-                //TODO cambiare texture
                 //open chest texture
                 OpenChest1.sprite.setPosition(chestArray[counter].rect.getPosition());
                 openChestArray.push_back(OpenChest1);
