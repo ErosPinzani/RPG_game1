@@ -23,6 +23,13 @@ public:
     virtual void UpdateMovement(bool testing = false, sf::Keyboard::Key key = sf::Keyboard::D);
     bool Walkable(int direction);
 
+    // getters
+    int getHp();
+
+protected:
+    // setters
+    void setHp(int hp);
+
 };
 
 

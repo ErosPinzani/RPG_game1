@@ -5,7 +5,7 @@
 #include "Hero.h"
 
 Hero::Hero() {
-    hp = 20;
+    setHp(20);
     maxhp = 20;
     movementSpeed = 5;
     attackDamage = 5;

@@ -65,3 +65,9 @@ bool Character::Walkable (int direction) {
         return true;
     return false;
 }
+
+// getters
+int Character::getHp() {return Character::hp;}
+
+// setters
+void Character::setHp(int hp) {Character::hp = hp;}
