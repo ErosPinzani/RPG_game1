@@ -140,7 +140,6 @@ int main()
 
     //blood object
     class Enemy Blood1;
-    Blood1.isBlood = true;
     Blood1.sprite.setTexture(textureBlood);
     Blood1.sprite.setTextureRect(sf::IntRect(0, 0, 70, 53));
 
@@ -152,6 +151,15 @@ int main()
     class Obstacle Chest1;
     Chest1.sprite.setTexture(textureChest);
     chestArray.push_back(Chest1);
+
+    //open chest vector array
+    vector<Obstacle>::const_iterator iter6;
+    vector<Obstacle> openChestArray;
+
+    //open chest object
+    class Obstacle OpenChest1;
+    OpenChest1.sprite.setTexture(textureChest);
+    OpenChest1.sprite.setTextureRect(sf::IntRect(0, 45.75*3, 50, 47.67));
 
     //text vector array
     vector<TextDisplay>::const_iterator iter8;
@@ -401,6 +409,9 @@ int main()
             if (!chestArray[counter].alive) {
 
                 //TODO cambiare texture
+                //open chest texture
+                OpenChest1.sprite.setPosition(chestArray[counter].rect.getPosition());
+                openChestArray.push_back(OpenChest1);
 
                 chestArray.erase(iter9);
                 break;
@@ -436,6 +447,13 @@ int main()
         counter = 0;
         for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
             window.draw(chestArray[counter].sprite);
+            counter++;
+        }
+
+        //draw open chest
+        counter = 0;
+        for (iter6 = openChestArray.begin(); iter6 != openChestArray.end(); iter6++) {
+            window.draw(openChestArray[counter].sprite);
             counter++;
         }
 
