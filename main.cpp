@@ -42,20 +42,13 @@ int main()
             std::vector<int>({766, 358}), std::vector<int>({766, 358}),
             std::vector<int>({1351, 518}), std::vector<int>({1351, 518}),
     });
-    int k = 12; //chest number
+    int k = 5; //chest number
     std::vector<std::vector<int>> chestPos = std::vector<std::vector<int>> ({
-            std::vector<int>({501, 453}),
-            std::vector<int>({391, 678}),
-            std::vector<int>({1056, 718}),
-            std::vector<int>({916, 968}),
-            std::vector<int>({236, 908}),
-            std::vector<int>({106, 388}),
-            std::vector<int>({1456, 968}),
-            std::vector<int>({2316, 718}),
-            std::vector<int>({1561, 633}),
-            std::vector<int>({526, 53}),
-            std::vector<int>({766, 358}),
-            std::vector<int>({1351, 518}),
+            std::vector<int>({371, 563}),
+            std::vector<int>({61, 363}),
+            std::vector<int>({1271, 953}),
+            std::vector<int>({1526, 568}),
+            std::vector<int>({366, 53}),
     });
 
     //create window
@@ -205,7 +198,7 @@ int main()
         //clear screen
         window.clear();
 
-        //cout << Hero1.rect.getPosition().x <<"   "<<Hero1.rect.getPosition().y<< endl ;
+        cout << Hero1.rect.getPosition().x <<"   "<<Hero1.rect.getPosition().y<< endl ;
 
         //render map
         Map::getInstance()->vectorM1;
