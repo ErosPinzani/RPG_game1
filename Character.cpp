@@ -68,6 +68,16 @@ bool Character::Walkable (int direction) {
 
 // getters
 int Character::getHp() {return Character::hp;}
+int Character::getMaxhp() {return Character::maxhp;}
+float Character::getMovementSpeed() {return Character::movementSpeed;}
+int Character::getAttackDamage() {return Character::attackDamage;}
+int Character::getCounterWalking() {return Character::counterWalking;}
+int Character::getDirection() {return Character::direction;}
 
 // setters
 void Character::setHp(int hp) {Character::hp = hp;}
+void Character::setMaxhp(int maxhp) {Character::maxhp = maxhp;}
+void Character::setMovementSpeed(float movementSpeeed) {Character::movementSpeed = movementSpeeed;}
+void Character::setAttackDamage(int attackDamage) {Character::attackDamage = attackDamage;}
+void Character::setCounterWalking(int counterWalking) {Character::counterWalking = counterWalking;}
+void Character::setDirection(int direction) {Character::direction = direction;}

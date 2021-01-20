@@ -13,9 +13,9 @@ PickUp::PickUp() {
 void PickUp::Update() {
     sprite.setPosition(rect.getPosition());
 
-    sprite.setTextureRect(sf::IntRect(counterWalking * 21.75, 0, 21.75, 20));
+    sprite.setTextureRect(sf::IntRect(counterWalking * 20.6, 0, 20.6, 20));
 
     counterWalking++;
-    if (counterWalking == 3)
+    if (counterWalking == 9)
         counterWalking = 0;
 }

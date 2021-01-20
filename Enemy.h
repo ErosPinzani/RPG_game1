@@ -17,6 +17,7 @@ public:
 
     Enemy();
     void UpdateMovement(bool testing = false, sf::Keyboard::Key key = sf::Keyboard::D) override;
+
 };
 
 

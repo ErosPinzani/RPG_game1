@@ -13,6 +13,17 @@ public:
     sf::RectangleShape rect;
     sf::Sprite sprite;
     sf::Text text;
+
+    // getters
+    int getHp();
+    int getMaxhp();
+    float getMovementSpeed();
+    int getAttackDamage();
+    int getCounterWalking();
+    int getDirection();
+
+    virtual void UpdateMovement(bool testing = false, sf::Keyboard::Key key = sf::Keyboard::D);
+    bool Walkable(int direction);
     int hp;
     int maxhp;
     float movementSpeed;
@@ -20,15 +31,17 @@ public:
     int counterWalking = 0;
     int direction = 0; //1 - up, 2 - down, 3 - left, 4 - right
 
-    virtual void UpdateMovement(bool testing = false, sf::Keyboard::Key key = sf::Keyboard::D);
-    bool Walkable(int direction);
-
-    // getters
-    int getHp();
-
 protected:
     // setters
     void setHp(int hp);
+    void setMaxhp(int maxhp);
+    void setMovementSpeed(float movementSpeeed);
+    void setAttackDamage(int attackDamage);
+    void setCounterWalking(int counterWalking);
+    void setDirection(int direction);
+
+private:
+
 
 };
 

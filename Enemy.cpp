@@ -5,10 +5,25 @@
 #include "Enemy.h"
 
 Enemy::Enemy() {
-    hp = 15;
-    maxhp = 15;
-    movementSpeed = 2;
-    attackDamage = 2;
+    //hp
+    getHp();
+    setHp(15);
+    //maxhp
+    getMaxhp();
+    setMaxhp(15);
+    //movementSpeed
+    getMovementSpeed();
+    setMovementSpeed(2);
+    //attackDamage
+    getAttackDamage();
+    setAttackDamage(2);
+    //direction
+    getDirection();
+    setDirection(0);
+    //counterwalking
+    getCounterWalking();
+    setCounterWalking(0);
+
     rect.setSize(sf::Vector2f(31.7, 31.7));
     rect.setPosition(75, 42);
     rect.setFillColor(sf::Color::Blue);
@@ -18,7 +33,6 @@ Enemy::Enemy() {
 void Enemy::UpdateMovement(bool testing, sf::Keyboard::Key key) {
     sprite.setPosition(rect.getPosition());
     text.setPosition(rect.getPosition().x - rect.getSize().x/2 - 5, rect.getPosition().y - rect.getSize().y/2 - 5);
-
     if (direction == 1 && Character::Walkable(1)){ //up
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*3, 31.7, 31.7));
