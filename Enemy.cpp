@@ -5,24 +5,10 @@
 #include "Enemy.h"
 
 Enemy::Enemy() {
-    //hp
-    getHp();
-    setHp(15);
-    //maxhp
-    getMaxhp();
-    setMaxhp(15);
-    //movementSpeed
-    getMovementSpeed();
-    setMovementSpeed(2);
-    //attackDamage
-    getAttackDamage();
-    setAttackDamage(2);
-    //direction
-    getDirection();
-    setDirection(0);
-    //counterwalking
-    getCounterWalking();
-    setCounterWalking(0);
+    hp = 15;
+    maxhp = 15;
+    movementSpeed = 2;
+    attackDamage = 2;
 
     rect.setSize(sf::Vector2f(31.7, 31.7));
     rect.setPosition(75, 42);

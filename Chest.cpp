@@ -5,9 +5,7 @@
 #include "Chest.h"
 
 Chest::Chest() {
-    //hp
-    getHp();
-    setHp(5);
+    hp = 5;
 
     sprite.setTextureRect(sf::IntRect(0, 0, 47, 45));
     rect.setSize(sf::Vector2f(47, 45));

@@ -5,24 +5,9 @@
 #include "Hero.h"
 
 Hero::Hero() {
-    //hp
-    getHp();
-    setHp(20);
-    //maxhp
-    getMaxhp();
-    setMaxhp(20);
-    //movementSpeed
-    getMovementSpeed();
-    setMovementSpeed(5);
-    //attackDamage
-    getAttackDamage();
-    setAttackDamage(5);
-    //direction
-    getDirection();
-    setDirection(0);
-    //counterwalking
-    getCounterWalking();
-    setCounterWalking(0);
+    hp = 20;
+    maxhp = 20;
+    movementSpeed = 5;
 
     rect.setSize(sf::Vector2f(31.7, 31.7));
     rect.setPosition(200-24, 200-32);
