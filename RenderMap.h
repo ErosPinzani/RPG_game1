@@ -20,6 +20,8 @@ protected:
         target.draw(vertices, states);              // draw the vertex array
     }
 public:
+    static std::vector<std::vector<int>> enemyPos;
+    static std::vector<std::vector<int>> chestPos;
     int map_width = 48;
     int map_height = 21;
 
@@ -64,10 +66,29 @@ public:
             }
         }
     }
-
-    virtual int *getMap() { return map; }
-    virtual int getMapWidth() { return map_width; }
-    virtual int getMapHeight() { return map_height; }
 };
+
+std::vector<std::vector<int>> RenderMap::enemyPos =  std::vector<std::vector<int>> ({
+    std::vector<int>({501, 453}), std::vector<int>({501, 453}),
+    std::vector<int>({391, 678}), std::vector<int>({391, 678}),
+    std::vector<int>({1056, 718}), std::vector<int>({1056, 718}),
+    std::vector<int>({916, 968}), std::vector<int>({916, 968}),
+    std::vector<int>({236, 908}), std::vector<int>({236, 908}),
+    std::vector<int>({106, 388}), std::vector<int>({106, 388}),
+    std::vector<int>({1456, 968}), std::vector<int>({1456, 968}),
+    std::vector<int>({2316, 718}), std::vector<int>({2316, 718}),
+    std::vector<int>({1561, 633}), std::vector<int>({1561, 633}),
+    std::vector<int>({526, 53}), std::vector<int>({526, 53}),
+    std::vector<int>({766, 358}), std::vector<int>({766, 358}),
+    std::vector<int>({1351, 518}), std::vector<int>({1351, 518}),
+    });
+
+std::vector<std::vector<int>> RenderMap::chestPos = std::vector<std::vector<int>> ({
+    std::vector<int>({371, 563}),
+    std::vector<int>({61, 363}),
+    std::vector<int>({1271, 953}),
+    std::vector<int>({1526, 568}),
+    std::vector<int>({366, 53}),
+    });
 
 #endif //MAIN_CPP_RENDERMAP_H

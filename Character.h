@@ -25,14 +25,14 @@ public:
     virtual void UpdateMovement(bool testing = false, sf::Keyboard::Key key = sf::Keyboard::D);
     bool Walkable(int direction);
 
-
-protected:
     int hp;
     int maxhp;
     float movementSpeed;
     int attackDamage;
     int counterWalking = 0;
     int direction = 0; //1 - up, 2 - down, 3 - left, 4 - right
+protected:
+
 
     // setters
     void setHp(int hp);

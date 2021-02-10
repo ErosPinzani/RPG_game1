@@ -28,28 +28,7 @@ int main()
     sf::Clock clock3;
     sf::Clock clock4;
     int n = 24; //enemy number
-    std::vector<std::vector<int>> enemyPos = std::vector<std::vector<int>> ({
-            std::vector<int>({501, 453}), std::vector<int>({501, 453}),
-            std::vector<int>({391, 678}), std::vector<int>({391, 678}),
-            std::vector<int>({1056, 718}), std::vector<int>({1056, 718}),
-            std::vector<int>({916, 968}), std::vector<int>({916, 968}),
-            std::vector<int>({236, 908}), std::vector<int>({236, 908}),
-            std::vector<int>({106, 388}), std::vector<int>({106, 388}),
-            std::vector<int>({1456, 968}), std::vector<int>({1456, 968}),
-            std::vector<int>({2316, 718}), std::vector<int>({2316, 718}),
-            std::vector<int>({1561, 633}), std::vector<int>({1561, 633}),
-            std::vector<int>({526, 53}), std::vector<int>({526, 53}),
-            std::vector<int>({766, 358}), std::vector<int>({766, 358}),
-            std::vector<int>({1351, 518}), std::vector<int>({1351, 518}),
-    });
     int k = 5; //chest number
-    std::vector<std::vector<int>> chestPos = std::vector<std::vector<int>> ({
-            std::vector<int>({371, 563}),
-            std::vector<int>({61, 363}),
-            std::vector<int>({1271, 953}),
-            std::vector<int>({1526, 568}),
-            std::vector<int>({366, 53}),
-    });
 
     //create window
     sf::RenderWindow window(sf::VideoMode(1500, 850), "RPG Game");
@@ -431,14 +410,14 @@ int main()
 
         //spawn new enemies
         while(n > 0){
-            Enemy1.rect.setPosition(enemyPos[n-1][0], enemyPos[n-1][1]);
+            Enemy1.rect.setPosition(RenderMap::enemyPos[n-1][0], RenderMap::enemyPos[n-1][1]);
             enemyArray.push_back(Enemy1);
             n--;
         }
 
         //spawn new chests
         while(k > 0){
-            Chest1.rect.setPosition(chestPos[k-1][0], chestPos[k-1][1]);
+            Chest1.rect.setPosition(RenderMap::chestPos[k-1][0], RenderMap::chestPos[k-1][1]);
             chestArray.push_back(Chest1);
             k--;
         }
