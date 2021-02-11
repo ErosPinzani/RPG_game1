@@ -12,7 +12,7 @@ public:
     sf::RectangleShape rect;
     sf::Sprite sprite;
 
-    int movementSpeed;
+    int movementSpeed = 1;
     int attackDamage;
     int direction = 0; //1 - up, 2 - down, 3 - left, 4 - right
     bool destroy = false;
