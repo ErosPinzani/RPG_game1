@@ -16,8 +16,11 @@
 
 using namespace std;
 
-int main()
-{
+
+void item_collision(Hero &Hero, vector<PickUp> &pickUpArray);
+void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay, vector<TextDisplay> &textDisplayArray);
+
+int main(){
     //variables
     int counter;
     int counter2;
@@ -164,7 +167,6 @@ int main()
     //map
     class RenderMap RenderMap1;
 
-
     //start game loop
     while (window.isOpen()) {
         // check all the window's events that were triggered since the last iteration of the loop
@@ -193,33 +195,11 @@ int main()
         sf::Time elapsed4 = clock4.getElapsedTime();
 
         //player collides with PickUp items
-        counter = 0;
-        for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
-            if (Hero1.rect.getGlobalBounds().intersects(pickUpArray[counter].rect.getGlobalBounds())) {
-                if (pickUpArray[counter].isCoin)
-                    Hero1.coins += pickUpArray[counter].coinValue;
-                pickUpArray[counter].destroy = true;
-            }
-            counter++;
-        }
+        item_collision(Hero1, pickUpArray);
 
         //enemy collision with player
-        if (elapsed2.asSeconds() >= 0.5) {
-            clock2.restart();
-            counter = 0;
-            for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-                if (Hero1.rect.getGlobalBounds().intersects(enemyArray[counter].rect.getGlobalBounds())) {
+        enemy_collision_player(Hero1, enemyArray, TextDisplay1, textDisplayArray);
 
-                    //text display
-                    TextDisplay1.text.setString(to_string(enemyArray[counter].attackDamage));
-                    TextDisplay1.text.setPosition(Hero1.rect.getPosition().x + Hero1.rect.getSize().x / 2,Hero1.rect.getPosition().y - Hero1.rect.getSize().y / 2);
-                    textDisplayArray.push_back(TextDisplay1);
-
-                    Hero1.hp -= enemyArray[counter].attackDamage;
-                }
-                counter++;
-            }
-        }
 
         //enemy aggro AI
         counter = 0;
@@ -526,4 +506,40 @@ int main()
 
 
     return 0;
+}
+
+void item_collision(Hero &Hero, vector<PickUp> &pickUpArray){
+    vector<PickUp>::const_iterator iter;
+    int counter = 0;
+    for (iter = pickUpArray.begin(); iter != pickUpArray.end(); iter++) {
+        if (Hero.rect.getGlobalBounds().intersects(pickUpArray[counter].rect.getGlobalBounds())) {
+            if (pickUpArray[counter].isCoin)
+                Hero.coins += pickUpArray[counter].coinValue;
+            pickUpArray[counter].destroy = true;
+        }
+        counter++;
+    }
+}
+
+void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay, vector<TextDisplay> &textDisplayArray){
+    vector<Enemy>::const_iterator iter;
+    sf::Clock clock;
+    sf::Time elapsed = clock.getElapsedTime();
+
+    if (elapsed.asSeconds() >= 0.5) {
+        clock.restart();
+        int counter = 0;
+        for (iter = enemyArray.begin(); iter != enemyArray.end(); iter++) {
+            if (Hero.rect.getGlobalBounds().intersects(enemyArray[counter].rect.getGlobalBounds())) {
+
+                //text display
+                TextDisplay.text.setString(to_string(enemyArray[counter].attackDamage));
+                TextDisplay.text.setPosition(Hero.rect.getPosition().x + Hero.rect.getSize().x / 2,Hero.rect.getPosition().y - Hero.rect.getSize().y / 2);
+                textDisplayArray.push_back(TextDisplay);
+
+                Hero.hp -= enemyArray[counter].attackDamage;
+            }
+            counter++;
+        }
+    }
 }

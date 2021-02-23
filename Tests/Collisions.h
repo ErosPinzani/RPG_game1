@@ -10,7 +10,7 @@
 #include "../Enemy.h"
 #include "../Map.h"
 #include "../Chest.h"
-#include "../Bullet.h"
+#include "../AoeBullet.h"
 
 TEST(Collision, WallCollision){
     Map::getInstance()->vectorM1 = std::vector<int> {
@@ -37,7 +37,7 @@ TEST(Collision, WallCollision){
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
     };
 
-    Bullet Bullet1;
+    AoeBullet Bullet1;
     Bullet1.rect.setPosition(100, 100);
 
     Bullet1.direction = 3;
@@ -107,18 +107,21 @@ TEST(Collision, WallCollision){
 }
 
 TEST(Collision, EnemyCollision){
-    Bullet Bullet1;
+    AoeBullet Bullet1;
     Enemy Enemy1;
 
-    Enemy1.rect.setPosition(95, 100);
+    Enemy1.rect.setPosition(50, 100);
     Bullet1.rect.setPosition(100, 100);
 
-    int initHp = Enemy1.getHp();
+    int initHp = Enemy1.hp;
     Bullet1.attackDamage = 5;
     Bullet1.direction = 3;
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++) {
+        std::cout<<Enemy1.hp<<endl;
         Bullet1.Update();
-    ASSERT_EQ(Enemy1.getHp(), initHp - Bullet1.attackDamage);
+    }
+    ASSERT_EQ((int)Bullet1.destroy, true);
+    ASSERT_EQ(Enemy1.hp, initHp - Bullet1.attackDamage);
 }
 
 #endif //ENEMY_CPP_COLLISIONS_H
