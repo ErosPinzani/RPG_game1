@@ -18,7 +18,8 @@ using namespace std;
 
 
 void item_collision(Hero &Hero, vector<PickUp> &pickUpArray);
-void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay, vector<TextDisplay> &textDisplayArray);
+//void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay, vector<TextDisplay> &textDisplayArray);
+void aggro(vector<Enemy> &enemyArray, Hero &Hero);
 
 int main(){
     //variables
@@ -198,62 +199,28 @@ int main(){
         item_collision(Hero1, pickUpArray);
 
         //enemy collision with player
-        enemy_collision_player(Hero1, enemyArray, TextDisplay1, textDisplayArray);
+        //enemy_collision_player(Hero1, enemyArray, TextDisplay1, textDisplayArray);
+
+        if (elapsed3.asSeconds() >= 0.5) {
+            clock.restart();
+            counter = 0;
+            for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
+                if (Hero1.rect.getGlobalBounds().intersects(enemyArray[counter].rect.getGlobalBounds())) {
+
+                    //text display
+                    TextDisplay1.text.setString(to_string(enemyArray[counter].attackDamage));
+                    TextDisplay1.text.setPosition(Hero1.rect.getPosition().x + Hero1.rect.getSize().x / 2,Hero1.rect.getPosition().y - Hero1.rect.getSize().y / 2);
+                    textDisplayArray.push_back(TextDisplay1);
+
+                    Hero1.hp -= enemyArray[counter].attackDamage;
+                }
+                counter++;
+            }
+        }
 
 
         //enemy aggro AI
-        counter = 0;
-        for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-            if (enemyArray[counter].aggro) {
-                if (elapsed4.asSeconds() >= 0.05) {
-                    clock4.restart();
-                    int tempRand = generateRandom(3);
-                    if (tempRand == 1) {
-
-                        //hero to up
-                        if ((Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero1.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
-                            enemyArray[counter].direction = 1;
-                        }
-                        //hero to down
-                        if ((Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero1.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
-                            enemyArray[counter].direction = 2;
-                        }
-                        //hero to right
-                        if ((Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero1.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
-                            enemyArray[counter].direction = 3;
-                        }
-                        //hero to left
-                        if ((Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero1.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
-                            enemyArray[counter].direction = 4;
-                        }
-                    }
-
-                    //enemy chases Hero
-                    else if (tempRand == 2) {
-                        if (Hero1.rect.getPosition().y < enemyArray[counter].rect.getPosition().y)
-                            enemyArray[counter].direction = 1;
-                        else if (Hero1.rect.getPosition().y > enemyArray[counter].rect.getPosition().y)
-                            enemyArray[counter].direction = 2;
-                        else if (Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x)
-                            enemyArray[counter].direction = 3;
-                        else if (Hero1.rect.getPosition().x > enemyArray[counter].rect.getPosition().x)
-                            enemyArray[counter].direction = 4;
-                    }
-
-                    else {
-                        if (Hero1.rect.getPosition().x < enemyArray[counter].rect.getPosition().x)
-                            enemyArray[counter].direction = 3;
-                        else if (Hero1.rect.getPosition().x > enemyArray[counter].rect.getPosition().x)
-                            enemyArray[counter].direction = 4;
-                        else if (Hero1.rect.getPosition().y < enemyArray[counter].rect.getPosition().y)
-                            enemyArray[counter].direction = 1;
-                        else if (Hero1.rect.getPosition().y > enemyArray[counter].rect.getPosition().y)
-                            enemyArray[counter].direction = 2;
-                    }
-                }
-            }
-            counter++;
-        }
+        aggro(enemyArray, Hero1);
 
         //AoeBullet collisions
         counter = 0;
@@ -520,7 +487,7 @@ void item_collision(Hero &Hero, vector<PickUp> &pickUpArray){
         counter++;
     }
 }
-
+/*
 void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay, vector<TextDisplay> &textDisplayArray){
     vector<Enemy>::const_iterator iter;
     sf::Clock clock;
@@ -541,5 +508,64 @@ void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &T
             }
             counter++;
         }
+    }
+}
+ */
+
+void aggro(vector<Enemy> &enemyArray, Hero &Hero){
+    vector<Enemy>::const_iterator iter;
+    sf::Clock clock;
+    sf::Time elapsed = clock.getElapsedTime();
+    int counter = 0;
+    for (iter = enemyArray.begin(); iter != enemyArray.end(); iter++) {
+        if (enemyArray[counter].aggro) {
+            if (elapsed.asSeconds() >= 0.05) {
+                clock.restart();
+                int tempRand = generateRandom(3);
+                if (tempRand == 1) {
+
+                    //hero to up
+                    if ((Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
+                        enemyArray[counter].direction = 1;
+                    }
+                    //hero to down
+                    if ((Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
+                        enemyArray[counter].direction = 2;
+                    }
+                    //hero to right
+                    if ((Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
+                        enemyArray[counter].direction = 3;
+                    }
+                    //hero to left
+                    if ((Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
+                        enemyArray[counter].direction = 4;
+                    }
+                }
+
+                    //enemy chases Hero
+                else if (tempRand == 2) {
+                    if (Hero.rect.getPosition().y < enemyArray[counter].rect.getPosition().y)
+                        enemyArray[counter].direction = 1;
+                    else if (Hero.rect.getPosition().y > enemyArray[counter].rect.getPosition().y)
+                        enemyArray[counter].direction = 2;
+                    else if (Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x)
+                        enemyArray[counter].direction = 3;
+                    else if (Hero.rect.getPosition().x > enemyArray[counter].rect.getPosition().x)
+                        enemyArray[counter].direction = 4;
+                }
+
+                else {
+                    if (Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x)
+                        enemyArray[counter].direction = 3;
+                    else if (Hero.rect.getPosition().x > enemyArray[counter].rect.getPosition().x)
+                        enemyArray[counter].direction = 4;
+                    else if (Hero.rect.getPosition().y < enemyArray[counter].rect.getPosition().y)
+                        enemyArray[counter].direction = 1;
+                    else if (Hero.rect.getPosition().y > enemyArray[counter].rect.getPosition().y)
+                        enemyArray[counter].direction = 2;
+                }
+            }
+        }
+        counter++;
     }
 }
