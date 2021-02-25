@@ -18,8 +18,10 @@ using namespace std;
 
 
 void item_collision(Hero &Hero, vector<PickUp> &pickUpArray);
-//void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay, vector<TextDisplay> &textDisplayArray);
+void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay/*, vector<TextDisplay> &textDisplayArray*/);
 void aggro(vector<Enemy> &enemyArray, Hero &Hero);
+void aoe_collision(vector<AoeBullet> &AoeBulletArray, vector<Enemy> &enemyArray, vector<Chest> &chestArray, TextDisplay &TextDisplay/*, vector<TextDisplay> &textDisplayArray*/);
+
 
 int main(){
     //variables
@@ -199,8 +201,8 @@ int main(){
         item_collision(Hero1, pickUpArray);
 
         //enemy collision with player
-        //enemy_collision_player(Hero1, enemyArray, TextDisplay1, textDisplayArray);
-
+        enemy_collision_player(Hero1, enemyArray, TextDisplay1/*, textDisplayArray*/);
+/*
         if (elapsed3.asSeconds() >= 0.5) {
             clock.restart();
             counter = 0;
@@ -217,48 +219,51 @@ int main(){
                 counter++;
             }
         }
-
+*/
 
         //enemy aggro AI
         aggro(enemyArray, Hero1);
 
         //AoeBullet collisions
-        counter = 0;
-        for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
-            counter2 = 0;
-            counter3 = 0;
-            for (iter4 = enemyArray.begin(); iter4 !=enemyArray.end(); iter4++) {
-                if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(enemyArray[counter2].rect.getGlobalBounds())){
-                    AoeBulletArray[counter].destroy = true;
+        aoe_collision(AoeBulletArray, enemyArray, chestArray, TextDisplay1/*, vector<TextDisplay> &textDisplayArray*/);
 
-                    //text display
-                    TextDisplay1.text.setString(to_string(AoeBulletArray[counter].attackDamage));
-                    TextDisplay1.text.setPosition(enemyArray[counter2].rect.getPosition().x + enemyArray[counter2].rect.getSize().x / 2,enemyArray[counter2].rect.getPosition().y - enemyArray[counter2].rect.getSize().y / 2);
-                    textDisplayArray.push_back(TextDisplay1);
+            /*
+            counter = 0;
+            for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
+                counter2 = 0;
+                counter3 = 0;
+                for (iter4 = enemyArray.begin(); iter4 !=enemyArray.end(); iter4++) {
+                    if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(enemyArray[counter2].rect.getGlobalBounds())){
+                        AoeBulletArray[counter].destroy = true;
 
-                    enemyArray[counter2].hp -= AoeBulletArray[counter].attackDamage;
-                    if (enemyArray[counter2].hp <= 0)
-                        enemyArray[counter2].alive = false;
+                        //text display
+                        TextDisplay1.text.setString(to_string(AoeBulletArray[counter].attackDamage));
+                        TextDisplay1.text.setPosition(enemyArray[counter2].rect.getPosition().x + enemyArray[counter2].rect.getSize().x / 2,enemyArray[counter2].rect.getPosition().y - enemyArray[counter2].rect.getSize().y / 2);
+                        textDisplayArray.push_back(TextDisplay1);
 
-                    //aggro
-                    enemyArray[counter2].aggro = true;
+                        enemyArray[counter2].hp -= AoeBulletArray[counter].attackDamage;
+                        if (enemyArray[counter2].hp <= 0)
+                            enemyArray[counter2].alive = false;
+
+                        //aggro
+                        enemyArray[counter2].aggro = true;
+                    }
+                    counter2++;
                 }
-                counter2++;
-            }
 
-            //chest collision
-            for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
-                if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(chestArray[counter3].rect.getGlobalBounds())) {
-                    AoeBulletArray[counter].destroy = true;
-                    chestArray[counter3].hp -= AoeBulletArray[counter].attackDamage;
-                    if (chestArray[counter3].hp <= 0)
-                        chestArray[counter3].alive = false;
+                //chest collision
+                for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
+                    if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(chestArray[counter3].rect.getGlobalBounds())) {
+                        AoeBulletArray[counter].destroy = true;
+                        chestArray[counter3].hp -= AoeBulletArray[counter].attackDamage;
+                        if (chestArray[counter3].hp <= 0)
+                            chestArray[counter3].alive = false;
+                    }
+                    counter3++;
                 }
-                counter3++;
+                counter++;
             }
-            counter++;
-        }
-
+    */
         if (elapsed3.asSeconds() >= 0.5) {
             clock3.restart();
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
@@ -487,8 +492,8 @@ void item_collision(Hero &Hero, vector<PickUp> &pickUpArray){
         counter++;
     }
 }
-/*
-void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay, vector<TextDisplay> &textDisplayArray){
+
+void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay/*, vector<TextDisplay> &textDisplayArray*/){
     vector<Enemy>::const_iterator iter;
     sf::Clock clock;
     sf::Time elapsed = clock.getElapsedTime();
@@ -498,19 +503,60 @@ void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &T
         int counter = 0;
         for (iter = enemyArray.begin(); iter != enemyArray.end(); iter++) {
             if (Hero.rect.getGlobalBounds().intersects(enemyArray[counter].rect.getGlobalBounds())) {
-
+/*
                 //text display
                 TextDisplay.text.setString(to_string(enemyArray[counter].attackDamage));
                 TextDisplay.text.setPosition(Hero.rect.getPosition().x + Hero.rect.getSize().x / 2,Hero.rect.getPosition().y - Hero.rect.getSize().y / 2);
                 textDisplayArray.push_back(TextDisplay);
-
+*/
                 Hero.hp -= enemyArray[counter].attackDamage;
             }
             counter++;
         }
     }
 }
- */
+
+
+void aoe_collision(vector<AoeBullet> &AoeBulletArray, vector<Enemy> &enemyArray, vector<Chest> &chestArray, TextDisplay &TextDisplay/*, vector<TextDisplay> &textDisplayArray*/){
+    vector<AoeBullet>::const_iterator iter;
+    vector<Enemy>::const_iterator iter1;
+    vector<Chest>::const_iterator iter2;
+    int counter = 0;
+    for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
+        int counter2 = 0;
+        int counter3 = 0;
+        for (iter1 = enemyArray.begin(); iter1 !=enemyArray.end(); iter1++) {
+            if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(enemyArray[counter2].rect.getGlobalBounds())){
+                AoeBulletArray[counter].destroy = true;
+/*
+                //text display
+                TextDisplay.text.setString(to_string(AoeBulletArray[counter].attackDamage));
+                TextDisplay.text.setPosition(enemyArray[counter2].rect.getPosition().x + enemyArray[counter2].rect.getSize().x / 2,enemyArray[counter2].rect.getPosition().y - enemyArray[counter2].rect.getSize().y / 2);
+                textDisplayArray.push_back(TextDisplay);
+*/
+                enemyArray[counter2].hp -= AoeBulletArray[counter].attackDamage;
+                if (enemyArray[counter2].hp <= 0)
+                    enemyArray[counter2].alive = false;
+
+                //aggro
+                enemyArray[counter2].aggro = true;
+            }
+            counter2++;
+        }
+
+        //chest collision
+        for (iter2 = chestArray.begin(); iter2 != chestArray.end(); iter2++) {
+            if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(chestArray[counter3].rect.getGlobalBounds())) {
+                AoeBulletArray[counter].destroy = true;
+                chestArray[counter3].hp -= AoeBulletArray[counter].attackDamage;
+                if (chestArray[counter3].hp <= 0)
+                    chestArray[counter3].alive = false;
+            }
+            counter3++;
+        }
+        counter++;
+    }
+}
 
 void aggro(vector<Enemy> &enemyArray, Hero &Hero){
     vector<Enemy>::const_iterator iter;
