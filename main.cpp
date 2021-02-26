@@ -20,10 +20,12 @@ using namespace std;
 template <class T> using sptr = std::shared_ptr<T>;
 
 void item_collision(Hero &Hero, vector<sptr<PickUpClass>> &pickUpArray);
-void enemy_collision_player(Hero &Hero, vector<sptr<Enemy>>&enemyArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray, sf::Clock &clock);
+void enemy_collision_player(Hero &Hero, vector<sptr<Enemy>> &enemyArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray, sf::Clock &clock);
 void aoe_collision(vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> &enemyArray, vector<sptr<Chest>> &chestArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray);
 void aggro(vector<sptr<Enemy>> &enemyArray, Hero &Hero, sf::Clock &clock);
 void delete_enemy(vector<sptr<Enemy>> &enemyArray, PickUpClass &PickUp, vector<sptr<PickUpClass>> &pickUpArray, Enemy &Blood, vector<sptr<Enemy>> &bloodArray);
+void delete_AoeBullet(vector<sptr<AoeBullet>> &AoeBulletArray);
+void delete_text(vector<sptr<TextDisplayClass>> &textDisplayArray);
 
 int main(){
     //variables
@@ -241,24 +243,11 @@ int main(){
         delete_enemy(enemyArray, PickUp1, pickUpArray, Blood1, bloodArray);
 
         //delete AoeBullet
-        counter = 0;
-        for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
-            if (AoeBulletArray[counter]->destroy) {
-                AoeBulletArray.erase(iter);
-                break;
-            }
-            counter++;
-        }
+        delete_AoeBullet(AoeBulletArray);
 
         //delete text
-        counter = 0;
-        for (iter8 = textDisplayArray.begin(); iter8 != textDisplayArray.end(); iter8++) {
-            if (textDisplayArray[counter]->destroy) {
-                textDisplayArray.erase(iter8);
-                break;
-            }
-            counter++;
-        }
+        delete_text(textDisplayArray);
+
 
         //delete chest
         counter = 0;
@@ -562,6 +551,31 @@ void delete_enemy(vector<sptr<Enemy>> &enemyArray, PickUpClass &PickUp, vector<s
             bloodArray.push_back(std::make_shared<Enemy>(Blood));
 
             enemyArray.erase(iter);
+            break;
+        }
+        counter++;
+    }
+}
+
+
+void delete_AoeBullet(vector<sptr<AoeBullet>> &AoeBulletArray){
+    vector<sptr<AoeBullet>>::const_iterator iter;
+    int counter = 0;
+    for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
+        if (AoeBulletArray[counter]->destroy) {
+            AoeBulletArray.erase(iter);
+            break;
+        }
+        counter++;
+    }
+}
+
+void delete_text(vector<sptr<TextDisplayClass>> &textDisplayArray){
+    vector<sptr<TextDisplayClass>>::const_iterator iter;
+    int counter = 0;
+    for (iter = textDisplayArray.begin(); iter != textDisplayArray.end(); iter++) {
+        if (textDisplayArray[counter]->destroy) {
+            textDisplayArray.erase(iter);
             break;
         }
         counter++;
