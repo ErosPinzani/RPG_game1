@@ -12,17 +12,18 @@
 #include "TextDisplayClass.h"
 #include "RenderMap.h"
 #include "Map.h"
-#include "PickUp.h"
+#include "PickUpClass.h"
 #include "Chest.h"
 
 using namespace std;
 // Add a short alias for std::shared_ptr to the current environment
 template <class T> using sptr = std::shared_ptr<T>;
 
-void item_collision(Hero &Hero, vector<sptr<PickUp>> &pickUpArray);
+void item_collision(Hero &Hero, vector<sptr<PickUpClass>> &pickUpArray);
 void enemy_collision_player(Hero &Hero, vector<sptr<Enemy>>&enemyArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray, sf::Clock &clock);
 void aoe_collision(vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> &enemyArray, vector<sptr<Chest>> &chestArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray);
 void aggro(vector<sptr<Enemy>> &enemyArray, Hero &Hero, sf::Clock &clock);
+void delete_enemy(vector<sptr<Enemy>> &enemyArray, PickUpClass &PickUp, vector<sptr<PickUpClass>> &pickUpArray, Enemy &Blood, vector<sptr<Enemy>> &bloodArray);
 
 int main(){
     //variables
@@ -161,11 +162,11 @@ int main(){
     TextDisplay1.text.setFont(font);
 
     //pickUp vector array
-    vector<sptr<PickUp>>::const_iterator iter11;
-    vector<sptr<PickUp>> pickUpArray;
+    vector<sptr<PickUpClass>>::const_iterator iter11;
+    vector<sptr<PickUpClass>> pickUpArray;
 
     //coin object
-    class PickUp PickUp1;
+    class PickUpClass PickUp1;
     PickUp1.sprite.setTexture(textureCoin);
 
     //map
@@ -198,7 +199,7 @@ int main(){
         sf::Time elapsed3 = clock3.getElapsedTime();
         sf::Time elapsed4 = clock4.getElapsedTime();
 
-        //player collides with PickUp items
+        //player collides with PickUpClass items
         item_collision(Hero1, pickUpArray);
 
         //enemy collision with player
@@ -237,25 +238,7 @@ int main(){
         }
 
         //delete dead enemy
-        counter = 0;
-        for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-            if (!enemyArray[counter]->alive) {
-
-                //drop coin
-                if(generateRandom(3) == 1) {
-                    PickUp1.rect.setPosition(enemyArray[counter]->rect.getPosition());
-                    pickUpArray.push_back(std::make_shared<PickUp>(PickUp1));
-                }
-
-                //create enemy blood stain
-                Blood1.sprite.setPosition(enemyArray[counter]->rect.getPosition());
-                bloodArray.push_back(std::make_shared<Enemy>(Blood1));
-
-                enemyArray.erase(iter4);
-                break;
-            }
-            counter++;
-        }
+        delete_enemy(enemyArray, PickUp1, pickUpArray, Blood1, bloodArray);
 
         //delete AoeBullet
         counter = 0;
@@ -289,7 +272,7 @@ int main(){
                 //drop coin
                 if(generateRandom(1) == 1) {
                     PickUp1.rect.setPosition(chestArray[counter]->rect.getPosition());
-                    pickUpArray.push_back(std::make_shared<PickUp>(PickUp1));
+                    pickUpArray.push_back(std::make_shared<PickUpClass>(PickUp1));
                 }
 
                 chestArray.erase(iter9);
@@ -298,7 +281,7 @@ int main(){
             counter++;
         }
 
-        //delete PickUp items
+        //delete PickUpClass items
         counter = 0;
         for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
             if (pickUpArray[counter]->destroy) {
@@ -354,7 +337,7 @@ int main(){
             counter++;
         }
 
-        //draw PickUp items
+        //draw PickUpClass items
         counter = 0;
         for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
             pickUpArray[counter]->Update();
@@ -428,8 +411,8 @@ int main(){
     return 0;
 }
 
-void item_collision(Hero &Hero, vector<sptr<PickUp>> &pickUpArray){
-    vector<sptr<PickUp>>::const_iterator iter;
+void item_collision(Hero &Hero, vector<sptr<PickUpClass>> &pickUpArray){
+    vector<sptr<PickUpClass>>::const_iterator iter;
     int counter = 0;
     for (iter = pickUpArray.begin(); iter != pickUpArray.end(); iter++) {
         if (Hero.rect.getGlobalBounds().intersects(pickUpArray[counter]->rect.getGlobalBounds())) {
@@ -557,6 +540,29 @@ void aggro(vector<sptr<Enemy>> &enemyArray, Hero &Hero, sf::Clock &clock){
                         enemyArray[counter]->direction = 2;
                 }
             }
+        }
+        counter++;
+    }
+}
+
+void delete_enemy(vector<sptr<Enemy>> &enemyArray, PickUpClass &PickUp, vector<sptr<PickUpClass>> &pickUpArray, Enemy &Blood, vector<sptr<Enemy>> &bloodArray){
+    vector<sptr<Enemy>>::const_iterator iter;
+    int counter = 0;
+    for (iter = enemyArray.begin(); iter != enemyArray.end(); iter++) {
+        if (!enemyArray[counter]->alive) {
+
+            //drop coin
+            if(generateRandom(3) == 1) {
+                PickUp.rect.setPosition(enemyArray[counter]->rect.getPosition());
+                pickUpArray.push_back(std::make_shared<PickUpClass>(PickUp));
+            }
+
+            //create enemy blood stain
+            Blood.sprite.setPosition(enemyArray[counter]->rect.getPosition());
+            bloodArray.push_back(std::make_shared<Enemy>(Blood));
+
+            enemyArray.erase(iter);
+            break;
         }
         counter++;
     }

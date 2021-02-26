@@ -6,7 +6,7 @@
 #define RPG_GAME_PICKUP_H
 #include "Character.h"
 
-class PickUp: public Character {
+class PickUpClass: public Character {
 public:
     bool isCoin = true;
     int coinValue = 5;
@@ -14,7 +14,7 @@ public:
 
     void Update();
 
-    PickUp();
+    PickUpClass();
 };
 
 
