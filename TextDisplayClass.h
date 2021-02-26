@@ -7,7 +7,7 @@
 
 #include "SFML/Graphics.hpp"
 
-class TextDisplay {
+class TextDisplayClass {
 public:
     sf::RectangleShape rect;
     sf::Sprite sprite;
@@ -18,7 +18,7 @@ public:
     int movementSpeed = 1;
     bool destroy = false;
 
-    TextDisplay();
+    TextDisplayClass();
     void Update();
 };
 

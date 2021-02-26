@@ -2,15 +2,15 @@
 // Created by erosp on 01/12/2020.
 //
 
-#include "TextDisplay.h"
+#include "TextDisplayClass.h"
 
-TextDisplay::TextDisplay() {
+TextDisplayClass::TextDisplayClass() {
     text.setFillColor(sf::Color::Red);
     text.setCharacterSize(15);
     text.setString(myString);
 }
 
-void TextDisplay::Update() {
+void TextDisplayClass::Update() {
     text.move(0, -movementSpeed);
     counter++;
     if (counter >= lifeTime)

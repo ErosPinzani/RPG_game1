@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 #include "Random.h"
 #include "Hero.h"
@@ -8,20 +9,20 @@
 #include "AoeBullet.h"
 #include "StBullet.h"
 #include "MeleeWeapon.h"
-#include "TextDisplay.h"
+#include "TextDisplayClass.h"
 #include "RenderMap.h"
 #include "Map.h"
 #include "PickUp.h"
 #include "Chest.h"
 
 using namespace std;
+// Add a short alias for std::shared_ptr to the current environment
+template <class T> using sptr = std::shared_ptr<T>;
 
-
-void item_collision(Hero &Hero, vector<PickUp> &pickUpArray);
-void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay/*, vector<TextDisplay> &textDisplayArray*/);
-void aggro(vector<Enemy> &enemyArray, Hero &Hero);
-void aoe_collision(vector<AoeBullet> &AoeBulletArray, vector<Enemy> &enemyArray, vector<Chest> &chestArray, TextDisplay &TextDisplay/*, vector<TextDisplay> &textDisplayArray*/);
-
+void item_collision(Hero &Hero, vector<sptr<PickUp>> &pickUpArray);
+void enemy_collision_player(Hero &Hero, vector<sptr<Enemy>>&enemyArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray, sf::Clock &clock);
+void aoe_collision(vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> &enemyArray, vector<sptr<Chest>> &chestArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray);
+void aggro(vector<sptr<Enemy>> &enemyArray, Hero &Hero, sf::Clock &clock);
 
 int main(){
     //variables
@@ -103,11 +104,11 @@ int main(){
     class MeleeWeapon MeleeWeapon1;
 
     //Bullet vector array
-    vector<AoeBullet>::const_iterator iter;
-    vector<AoeBullet> AoeBulletArray;
+    vector<sptr<AoeBullet>>::const_iterator iter;
+    vector<sptr<AoeBullet>> AoeBulletArray;
 
-    vector<StBullet>::const_iterator iter2;
-    vector<StBullet> StBulletArray;
+    vector<sptr<StBullet>>::const_iterator iter2;
+    vector<sptr<StBullet>> StBulletArray;
 
     //Bullet object
     class AoeBullet AoeBullet1;
@@ -117,8 +118,8 @@ int main(){
     StBullet1.sprite.setTexture(textureAoeBullet);
 
     //enemy vector array
-    vector<Enemy>::const_iterator iter4;
-    vector<Enemy> enemyArray;
+    vector<sptr<Enemy>>::const_iterator iter4;
+    vector<sptr<Enemy>> enemyArray;
 
     //enemy object
     class Enemy Enemy1;
@@ -128,8 +129,8 @@ int main(){
     Enemy1.text.setFillColor(sf::Color::Red);
 
     //blood vector array
-    vector<Enemy>::const_iterator iter5;
-    vector<Enemy> bloodArray;
+    vector<sptr<Enemy>>::const_iterator iter5;
+    vector<sptr<Enemy>> bloodArray;
 
     //blood object
     class Enemy Blood1;
@@ -137,11 +138,11 @@ int main(){
     Blood1.sprite.setTextureRect(sf::IntRect(0, 0, 70, 53));
 
     //chest vector array
-    vector<Chest>::const_iterator iter9;
-    vector<Chest> chestArray;
+    vector<sptr<Chest>>::const_iterator iter9;
+    vector<sptr<Chest>> chestArray;
 
-    vector<Chest>::const_iterator iter6;
-    vector<Chest> openChestArray;
+    vector<sptr<Chest>>::const_iterator iter6;
+    vector<sptr<Chest>> openChestArray;
 
     //chest object
     class Chest Chest1;
@@ -152,16 +153,16 @@ int main(){
     OpenChest1.sprite.setTextureRect(sf::IntRect(0, 45.75*3, 50, 47.67));
 
     //text vector array
-    vector<TextDisplay>::const_iterator iter8;
-    vector<TextDisplay> textDisplayArray;
+    vector<sptr<TextDisplayClass>>::const_iterator iter8;
+    vector<sptr<TextDisplayClass>> textDisplayArray;
 
     //text object
-    class TextDisplay TextDisplay1;
+    class TextDisplayClass TextDisplay1;
     TextDisplay1.text.setFont(font);
 
     //pickUp vector array
-    vector<PickUp>::const_iterator iter11;
-    vector<PickUp> pickUpArray;
+    vector<sptr<PickUp>>::const_iterator iter11;
+    vector<sptr<PickUp>> pickUpArray;
 
     //coin object
     class PickUp PickUp1;
@@ -201,87 +202,34 @@ int main(){
         item_collision(Hero1, pickUpArray);
 
         //enemy collision with player
-        enemy_collision_player(Hero1, enemyArray, TextDisplay1/*, textDisplayArray*/);
-/*
-        if (elapsed3.asSeconds() >= 0.5) {
-            clock.restart();
-            counter = 0;
-            for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-                if (Hero1.rect.getGlobalBounds().intersects(enemyArray[counter].rect.getGlobalBounds())) {
-
-                    //text display
-                    TextDisplay1.text.setString(to_string(enemyArray[counter].attackDamage));
-                    TextDisplay1.text.setPosition(Hero1.rect.getPosition().x + Hero1.rect.getSize().x / 2,Hero1.rect.getPosition().y - Hero1.rect.getSize().y / 2);
-                    textDisplayArray.push_back(TextDisplay1);
-
-                    Hero1.hp -= enemyArray[counter].attackDamage;
-                }
-                counter++;
-            }
-        }
-*/
-
-        //enemy aggro AI
-        aggro(enemyArray, Hero1);
+        enemy_collision_player(Hero1, enemyArray, TextDisplay1, textDisplayArray, clock2);
 
         //AoeBullet collisions
-        aoe_collision(AoeBulletArray, enemyArray, chestArray, TextDisplay1/*, vector<TextDisplay> &textDisplayArray*/);
+        aoe_collision(AoeBulletArray, enemyArray, chestArray, TextDisplay1, textDisplayArray);
 
-            /*
-            counter = 0;
-            for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
-                counter2 = 0;
-                counter3 = 0;
-                for (iter4 = enemyArray.begin(); iter4 !=enemyArray.end(); iter4++) {
-                    if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(enemyArray[counter2].rect.getGlobalBounds())){
-                        AoeBulletArray[counter].destroy = true;
+        //enemy aggro AI
+        aggro(enemyArray, Hero1, clock);
 
-                        //text display
-                        TextDisplay1.text.setString(to_string(AoeBulletArray[counter].attackDamage));
-                        TextDisplay1.text.setPosition(enemyArray[counter2].rect.getPosition().x + enemyArray[counter2].rect.getSize().x / 2,enemyArray[counter2].rect.getPosition().y - enemyArray[counter2].rect.getSize().y / 2);
-                        textDisplayArray.push_back(TextDisplay1);
 
-                        enemyArray[counter2].hp -= AoeBulletArray[counter].attackDamage;
-                        if (enemyArray[counter2].hp <= 0)
-                            enemyArray[counter2].alive = false;
 
-                        //aggro
-                        enemyArray[counter2].aggro = true;
-                    }
-                    counter2++;
-                }
-
-                //chest collision
-                for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
-                    if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(chestArray[counter3].rect.getGlobalBounds())) {
-                        AoeBulletArray[counter].destroy = true;
-                        chestArray[counter3].hp -= AoeBulletArray[counter].attackDamage;
-                        if (chestArray[counter3].hp <= 0)
-                            chestArray[counter3].alive = false;
-                    }
-                    counter3++;
-                }
-                counter++;
-            }
-    */
         if (elapsed3.asSeconds() >= 0.5) {
             clock3.restart();
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
                 //enemy collision with melee weapon
                 counter = 0;
                 for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-                    if (MeleeWeapon1.rect.getGlobalBounds().intersects(enemyArray[counter].rect.getGlobalBounds())) {
+                    if (MeleeWeapon1.rect.getGlobalBounds().intersects(enemyArray[counter]->rect.getGlobalBounds())) {
 
                         //text display
                         TextDisplay1.text.setString(to_string(MeleeWeapon1.attackDamage));
                         TextDisplay1.text.setPosition(
-                                enemyArray[counter].rect.getPosition().x + enemyArray[counter].rect.getSize().x / 2,
-                                enemyArray[counter].rect.getPosition().y - enemyArray[counter].rect.getSize().y / 2);
-                        textDisplayArray.push_back(TextDisplay1);
+                                enemyArray[counter]->rect.getPosition().x + enemyArray[counter]->rect.getSize().x / 2,
+                                enemyArray[counter]->rect.getPosition().y - enemyArray[counter]->rect.getSize().y / 2);
+                        textDisplayArray.push_back(std::make_shared<TextDisplayClass>(TextDisplay1));
 
-                        enemyArray[counter].hp -= MeleeWeapon1.attackDamage;
-                        if (enemyArray[counter].hp <= 0)
-                            enemyArray[counter].alive = false;
+                        enemyArray[counter]->hp -= MeleeWeapon1.attackDamage;
+                        if (enemyArray[counter]->hp <= 0)
+                            enemyArray[counter]->alive = false;
                     }
                     counter++;
                 }
@@ -291,17 +239,17 @@ int main(){
         //delete dead enemy
         counter = 0;
         for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-            if (!enemyArray[counter].alive) {
+            if (!enemyArray[counter]->alive) {
 
                 //drop coin
                 if(generateRandom(3) == 1) {
-                    PickUp1.rect.setPosition(enemyArray[counter].rect.getPosition());
-                    pickUpArray.push_back(PickUp1);
+                    PickUp1.rect.setPosition(enemyArray[counter]->rect.getPosition());
+                    pickUpArray.push_back(std::make_shared<PickUp>(PickUp1));
                 }
 
                 //create enemy blood stain
-                Blood1.sprite.setPosition(enemyArray[counter].rect.getPosition());
-                bloodArray.push_back(Blood1);
+                Blood1.sprite.setPosition(enemyArray[counter]->rect.getPosition());
+                bloodArray.push_back(std::make_shared<Enemy>(Blood1));
 
                 enemyArray.erase(iter4);
                 break;
@@ -312,7 +260,7 @@ int main(){
         //delete AoeBullet
         counter = 0;
         for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
-            if (AoeBulletArray[counter].destroy) {
+            if (AoeBulletArray[counter]->destroy) {
                 AoeBulletArray.erase(iter);
                 break;
             }
@@ -322,7 +270,7 @@ int main(){
         //delete text
         counter = 0;
         for (iter8 = textDisplayArray.begin(); iter8 != textDisplayArray.end(); iter8++) {
-            if (textDisplayArray[counter].destroy) {
+            if (textDisplayArray[counter]->destroy) {
                 textDisplayArray.erase(iter8);
                 break;
             }
@@ -332,16 +280,16 @@ int main(){
         //delete chest
         counter = 0;
         for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
-            if (!chestArray[counter].alive) {
+            if (!chestArray[counter]->alive) {
 
                 //open chest texture
-                OpenChest1.sprite.setPosition(chestArray[counter].rect.getPosition());
-                openChestArray.push_back(OpenChest1);
+                OpenChest1.sprite.setPosition(chestArray[counter]->rect.getPosition());
+                openChestArray.push_back(std::make_shared<Chest>(OpenChest1));
 
                 //drop coin
                 if(generateRandom(1) == 1) {
-                    PickUp1.rect.setPosition(chestArray[counter].rect.getPosition());
-                    pickUpArray.push_back(PickUp1);
+                    PickUp1.rect.setPosition(chestArray[counter]->rect.getPosition());
+                    pickUpArray.push_back(std::make_shared<PickUp>(PickUp1));
                 }
 
                 chestArray.erase(iter9);
@@ -353,7 +301,7 @@ int main(){
         //delete PickUp items
         counter = 0;
         for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
-            if (pickUpArray[counter].destroy) {
+            if (pickUpArray[counter]->destroy) {
                 pickUpArray.erase(iter11);
                 break;
             }
@@ -363,14 +311,14 @@ int main(){
         //spawn new enemies
         while(n > 0){
             Enemy1.rect.setPosition(RenderMap::enemyPos[n-1][0], RenderMap::enemyPos[n-1][1]);
-            enemyArray.push_back(Enemy1);
+            enemyArray.push_back(std::make_shared<Enemy>(Enemy1));
             n--;
         }
 
         //spawn new chests
         while(k > 0){
             Chest1.rect.setPosition(RenderMap::chestPos[k-1][0], RenderMap::chestPos[k-1][1]);
-            chestArray.push_back(Chest1);
+            chestArray.push_back(std::make_shared<Chest>(Chest1));
             k--;
         }
 
@@ -380,61 +328,61 @@ int main(){
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 AoeBullet1.rect.setPosition(Hero1.rect.getPosition().x + Hero1.rect.getSize().x/2 - AoeBullet1.rect.getSize().x/2, Hero1.rect.getPosition().y + Hero1.rect.getSize().y/2 - AoeBullet1.rect.getSize().y/2);
                 AoeBullet1.direction = Hero1.direction;
-                AoeBulletArray.push_back(AoeBullet1);
+                AoeBulletArray.push_back(std::make_shared<AoeBullet>(AoeBullet1));
             }
         }
 
         //draw blood
         counter = 0;
         for (iter5 = bloodArray.begin(); iter5 != bloodArray.end(); iter5++) {
-            window.draw(bloodArray[counter].sprite);
+            window.draw(bloodArray[counter]->sprite);
             counter++;
         }
 
         //draw chest
         counter = 0;
         for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
-            chestArray[counter].Update();
-            window.draw(chestArray[counter].sprite);
+            chestArray[counter]->Update();
+            window.draw(chestArray[counter]->sprite);
             counter++;
         }
 
         //draw open chest
         counter = 0;
         for (iter6 = openChestArray.begin(); iter6 != openChestArray.end(); iter6++) {
-            window.draw(openChestArray[counter].sprite);
+            window.draw(openChestArray[counter]->sprite);
             counter++;
         }
 
         //draw PickUp items
         counter = 0;
         for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
-            pickUpArray[counter].Update();
-            window.draw(pickUpArray[counter].sprite);
+            pickUpArray[counter]->Update();
+            window.draw(pickUpArray[counter]->sprite);
             counter++;
         }
 
         //draw AoeBullet
         counter = 0;
         for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
-            AoeBulletArray[counter].Update(); //update AoeBullet
-            window.draw(AoeBulletArray[counter].sprite);
+            AoeBulletArray[counter]->Update(); //update AoeBullet
+            window.draw(AoeBulletArray[counter]->sprite);
             counter++;
         }
 
         //draw enemies
         counter = 0;
         for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-            enemyArray[counter].UpdateMovement();
-            window.draw(enemyArray[counter].sprite);
+            enemyArray[counter]->UpdateMovement();
+            window.draw(enemyArray[counter]->sprite);
             counter++;
         }
 
         //draw enemy's hp
         counter = 0;
         for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-            enemyArray[counter].text.setString("HP " + to_string(enemyArray[counter].hp) + "/" + to_string(enemyArray[counter].maxhp));
-            window.draw(enemyArray[counter].text);
+            enemyArray[counter]->text.setString("HP " + to_string(enemyArray[counter]->hp) + "/" + to_string(enemyArray[counter]->maxhp));
+            window.draw(enemyArray[counter]->text);
             counter++;
         }
 
@@ -457,8 +405,8 @@ int main(){
         //draw text
         counter = 0;
         for (iter8 = textDisplayArray.begin(); iter8 != textDisplayArray.end(); iter8++) {
-            textDisplayArray[counter].Update();
-            window.draw(textDisplayArray[counter].text);
+            textDisplayArray[counter]->Update();
+            window.draw(textDisplayArray[counter]->text);
             counter++;
         }
 
@@ -480,36 +428,35 @@ int main(){
     return 0;
 }
 
-void item_collision(Hero &Hero, vector<PickUp> &pickUpArray){
-    vector<PickUp>::const_iterator iter;
+void item_collision(Hero &Hero, vector<sptr<PickUp>> &pickUpArray){
+    vector<sptr<PickUp>>::const_iterator iter;
     int counter = 0;
     for (iter = pickUpArray.begin(); iter != pickUpArray.end(); iter++) {
-        if (Hero.rect.getGlobalBounds().intersects(pickUpArray[counter].rect.getGlobalBounds())) {
-            if (pickUpArray[counter].isCoin)
-                Hero.coins += pickUpArray[counter].coinValue;
-            pickUpArray[counter].destroy = true;
+        if (Hero.rect.getGlobalBounds().intersects(pickUpArray[counter]->rect.getGlobalBounds())) {
+            if (pickUpArray[counter]->isCoin)
+                Hero.coins += pickUpArray[counter]->coinValue;
+            pickUpArray[counter]->destroy = true;
         }
         counter++;
     }
 }
 
-void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &TextDisplay/*, vector<TextDisplay> &textDisplayArray*/){
-    vector<Enemy>::const_iterator iter;
-    sf::Clock clock;
+void enemy_collision_player(Hero &Hero, vector<sptr<Enemy>> &enemyArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray, sf::Clock &clock){
+    vector<sptr<Enemy>>::const_iterator iter;
     sf::Time elapsed = clock.getElapsedTime();
 
     if (elapsed.asSeconds() >= 0.5) {
         clock.restart();
         int counter = 0;
         for (iter = enemyArray.begin(); iter != enemyArray.end(); iter++) {
-            if (Hero.rect.getGlobalBounds().intersects(enemyArray[counter].rect.getGlobalBounds())) {
-/*
+            if (Hero.rect.getGlobalBounds().intersects(enemyArray[counter]->rect.getGlobalBounds())) {
+
                 //text display
-                TextDisplay.text.setString(to_string(enemyArray[counter].attackDamage));
+                TextDisplay.text.setString(to_string(enemyArray[counter]->attackDamage));
                 TextDisplay.text.setPosition(Hero.rect.getPosition().x + Hero.rect.getSize().x / 2,Hero.rect.getPosition().y - Hero.rect.getSize().y / 2);
-                textDisplayArray.push_back(TextDisplay);
-*/
-                Hero.hp -= enemyArray[counter].attackDamage;
+                textDisplayArray.push_back(std::make_shared<TextDisplayClass>(TextDisplay));
+
+                Hero.hp -= enemyArray[counter]->attackDamage;
             }
             counter++;
         }
@@ -517,40 +464,40 @@ void enemy_collision_player(Hero &Hero, vector<Enemy>&enemyArray, TextDisplay &T
 }
 
 
-void aoe_collision(vector<AoeBullet> &AoeBulletArray, vector<Enemy> &enemyArray, vector<Chest> &chestArray, TextDisplay &TextDisplay/*, vector<TextDisplay> &textDisplayArray*/){
-    vector<AoeBullet>::const_iterator iter;
-    vector<Enemy>::const_iterator iter1;
-    vector<Chest>::const_iterator iter2;
+void aoe_collision(vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> &enemyArray, vector<sptr<Chest>> &chestArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray){
+    vector<sptr<AoeBullet>>::const_iterator iter;
+    vector<sptr<Enemy>>::const_iterator iter1;
+    vector<sptr<Chest>>::const_iterator iter2;
     int counter = 0;
     for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
         int counter2 = 0;
         int counter3 = 0;
         for (iter1 = enemyArray.begin(); iter1 !=enemyArray.end(); iter1++) {
-            if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(enemyArray[counter2].rect.getGlobalBounds())){
-                AoeBulletArray[counter].destroy = true;
-/*
+            if (AoeBulletArray[counter]->rect.getGlobalBounds().intersects(enemyArray[counter2]->rect.getGlobalBounds())){
+                AoeBulletArray[counter]->destroy = true;
+
                 //text display
-                TextDisplay.text.setString(to_string(AoeBulletArray[counter].attackDamage));
-                TextDisplay.text.setPosition(enemyArray[counter2].rect.getPosition().x + enemyArray[counter2].rect.getSize().x / 2,enemyArray[counter2].rect.getPosition().y - enemyArray[counter2].rect.getSize().y / 2);
-                textDisplayArray.push_back(TextDisplay);
-*/
-                enemyArray[counter2].hp -= AoeBulletArray[counter].attackDamage;
-                if (enemyArray[counter2].hp <= 0)
-                    enemyArray[counter2].alive = false;
+                TextDisplay.text.setString(to_string(AoeBulletArray[counter]->attackDamage));
+                TextDisplay.text.setPosition(enemyArray[counter2]->rect.getPosition().x + enemyArray[counter2]->rect.getSize().x / 2,enemyArray[counter2]->rect.getPosition().y - enemyArray[counter2]->rect.getSize().y / 2);
+                textDisplayArray.push_back(std::make_shared<TextDisplayClass>(TextDisplay));
+
+                enemyArray[counter2]->hp -= AoeBulletArray[counter]->attackDamage;
+                if (enemyArray[counter2]->hp <= 0)
+                    enemyArray[counter2]->alive = false;
 
                 //aggro
-                enemyArray[counter2].aggro = true;
+                enemyArray[counter2]->aggro = true;
             }
             counter2++;
         }
 
         //chest collision
         for (iter2 = chestArray.begin(); iter2 != chestArray.end(); iter2++) {
-            if (AoeBulletArray[counter].rect.getGlobalBounds().intersects(chestArray[counter3].rect.getGlobalBounds())) {
-                AoeBulletArray[counter].destroy = true;
-                chestArray[counter3].hp -= AoeBulletArray[counter].attackDamage;
-                if (chestArray[counter3].hp <= 0)
-                    chestArray[counter3].alive = false;
+            if (AoeBulletArray[counter]->rect.getGlobalBounds().intersects(chestArray[counter3]->rect.getGlobalBounds())) {
+                AoeBulletArray[counter]->destroy = true;
+                chestArray[counter3]->hp -= AoeBulletArray[counter]->attackDamage;
+                if (chestArray[counter3]->hp <= 0)
+                    chestArray[counter3]->alive = false;
             }
             counter3++;
         }
@@ -558,57 +505,56 @@ void aoe_collision(vector<AoeBullet> &AoeBulletArray, vector<Enemy> &enemyArray,
     }
 }
 
-void aggro(vector<Enemy> &enemyArray, Hero &Hero){
-    vector<Enemy>::const_iterator iter;
-    sf::Clock clock;
+void aggro(vector<sptr<Enemy>> &enemyArray, Hero &Hero, sf::Clock &clock){
+    vector<sptr<Enemy>>::const_iterator iter;
     sf::Time elapsed = clock.getElapsedTime();
     int counter = 0;
     for (iter = enemyArray.begin(); iter != enemyArray.end(); iter++) {
-        if (enemyArray[counter].aggro) {
+        if (enemyArray[counter]->aggro) {
             if (elapsed.asSeconds() >= 0.05) {
                 clock.restart();
                 int tempRand = generateRandom(3);
                 if (tempRand == 1) {
 
                     //hero to up
-                    if ((Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
-                        enemyArray[counter].direction = 1;
+                    if ((Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter]->rect.getPosition().y) <= 40)) {
+                        enemyArray[counter]->direction = 1;
                     }
                     //hero to down
-                    if ((Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
-                        enemyArray[counter].direction = 2;
+                    if ((Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter]->rect.getPosition().y) <= 40)) {
+                        enemyArray[counter]->direction = 2;
                     }
                     //hero to right
-                    if ((Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
-                        enemyArray[counter].direction = 3;
+                    if ((Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter]->rect.getPosition().y) <= 40)) {
+                        enemyArray[counter]->direction = 3;
                     }
                     //hero to left
-                    if ((Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter].rect.getPosition().y) <= 40)) {
-                        enemyArray[counter].direction = 4;
+                    if ((Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter]->rect.getPosition().y) <= 40)) {
+                        enemyArray[counter]->direction = 4;
                     }
                 }
 
                     //enemy chases Hero
                 else if (tempRand == 2) {
-                    if (Hero.rect.getPosition().y < enemyArray[counter].rect.getPosition().y)
-                        enemyArray[counter].direction = 1;
-                    else if (Hero.rect.getPosition().y > enemyArray[counter].rect.getPosition().y)
-                        enemyArray[counter].direction = 2;
-                    else if (Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x)
-                        enemyArray[counter].direction = 3;
-                    else if (Hero.rect.getPosition().x > enemyArray[counter].rect.getPosition().x)
-                        enemyArray[counter].direction = 4;
+                    if (Hero.rect.getPosition().y < enemyArray[counter]->rect.getPosition().y)
+                        enemyArray[counter]->direction = 1;
+                    else if (Hero.rect.getPosition().y > enemyArray[counter]->rect.getPosition().y)
+                        enemyArray[counter]->direction = 2;
+                    else if (Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x)
+                        enemyArray[counter]->direction = 3;
+                    else if (Hero.rect.getPosition().x > enemyArray[counter]->rect.getPosition().x)
+                        enemyArray[counter]->direction = 4;
                 }
 
                 else {
-                    if (Hero.rect.getPosition().x < enemyArray[counter].rect.getPosition().x)
-                        enemyArray[counter].direction = 3;
-                    else if (Hero.rect.getPosition().x > enemyArray[counter].rect.getPosition().x)
-                        enemyArray[counter].direction = 4;
-                    else if (Hero.rect.getPosition().y < enemyArray[counter].rect.getPosition().y)
-                        enemyArray[counter].direction = 1;
-                    else if (Hero.rect.getPosition().y > enemyArray[counter].rect.getPosition().y)
-                        enemyArray[counter].direction = 2;
+                    if (Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x)
+                        enemyArray[counter]->direction = 3;
+                    else if (Hero.rect.getPosition().x > enemyArray[counter]->rect.getPosition().x)
+                        enemyArray[counter]->direction = 4;
+                    else if (Hero.rect.getPosition().y < enemyArray[counter]->rect.getPosition().y)
+                        enemyArray[counter]->direction = 1;
+                    else if (Hero.rect.getPosition().y > enemyArray[counter]->rect.getPosition().y)
+                        enemyArray[counter]->direction = 2;
                 }
             }
         }
