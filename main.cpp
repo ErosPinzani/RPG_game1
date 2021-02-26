@@ -27,6 +27,7 @@ void delete_enemy(vector<sptr<Enemy>> &enemyArray, PickUpClass &PickUp, vector<s
 void delete_AoeBullet(vector<sptr<AoeBullet>> &AoeBulletArray);
 void delete_text(vector<sptr<TextDisplayClass>> &textDisplayArray);
 void delete_chest(vector<sptr<Chest>> &chestArray, Chest &OpenChest, vector<sptr<Chest>> &openChestArray, PickUpClass &PickUp, vector<sptr<PickUpClass>> &pickUpArray);
+void delete_PickUp_items(vector<sptr<PickUpClass>> &pickUpArray);
 
 int main(){
     //variables
@@ -253,14 +254,7 @@ int main(){
         delete_chest(chestArray, OpenChest1, openChestArray, PickUp1, pickUpArray);
 
         //delete PickUpClass items
-        counter = 0;
-        for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
-            if (pickUpArray[counter]->destroy) {
-                pickUpArray.erase(iter11);
-                break;
-            }
-            counter++;
-        }
+        delete_PickUp_items(pickUpArray);
 
         //spawn new enemies
         while(n > 0){
@@ -587,3 +581,14 @@ void delete_chest(vector<sptr<Chest>> &chestArray, Chest &OpenChest, vector<sptr
     }
 }
 
+void delete_PickUp_items(vector<sptr<PickUpClass>> &pickUpArray){
+    vector<sptr<PickUpClass>>::const_iterator iter;
+    int counter = 0;
+    for (iter = pickUpArray.begin(); iter != pickUpArray.end(); iter++) {
+        if (pickUpArray[counter]->destroy) {
+            pickUpArray.erase(iter);
+            break;
+        }
+        counter++;
+    }
+}
