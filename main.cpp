@@ -26,6 +26,7 @@ void aggro(vector<sptr<Enemy>> &enemyArray, Hero &Hero, sf::Clock &clock);
 void delete_enemy(vector<sptr<Enemy>> &enemyArray, PickUpClass &PickUp, vector<sptr<PickUpClass>> &pickUpArray, Enemy &Blood, vector<sptr<Enemy>> &bloodArray);
 void delete_AoeBullet(vector<sptr<AoeBullet>> &AoeBulletArray);
 void delete_text(vector<sptr<TextDisplayClass>> &textDisplayArray);
+void delete_chest(vector<sptr<Chest>> &chestArray, Chest &OpenChest, vector<sptr<Chest>> &openChestArray, PickUpClass &PickUp, vector<sptr<PickUpClass>> &pickUpArray);
 
 int main(){
     //variables
@@ -248,27 +249,8 @@ int main(){
         //delete text
         delete_text(textDisplayArray);
 
-
         //delete chest
-        counter = 0;
-        for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
-            if (!chestArray[counter]->alive) {
-
-                //open chest texture
-                OpenChest1.sprite.setPosition(chestArray[counter]->rect.getPosition());
-                openChestArray.push_back(std::make_shared<Chest>(OpenChest1));
-
-                //drop coin
-                if(generateRandom(1) == 1) {
-                    PickUp1.rect.setPosition(chestArray[counter]->rect.getPosition());
-                    pickUpArray.push_back(std::make_shared<PickUpClass>(PickUp1));
-                }
-
-                chestArray.erase(iter9);
-                break;
-            }
-            counter++;
-        }
+        delete_chest(chestArray, OpenChest1, openChestArray, PickUp1, pickUpArray);
 
         //delete PickUpClass items
         counter = 0;
@@ -581,3 +563,27 @@ void delete_text(vector<sptr<TextDisplayClass>> &textDisplayArray){
         counter++;
     }
 }
+
+void delete_chest(vector<sptr<Chest>> &chestArray, Chest &OpenChest, vector<sptr<Chest>> &openChestArray, PickUpClass &PickUp, vector<sptr<PickUpClass>> &pickUpArray){
+    vector<sptr<Chest>>::const_iterator iter;
+    int counter = 0;
+    for (iter = chestArray.begin(); iter != chestArray.end(); iter++) {
+        if (!chestArray[counter]->alive) {
+
+            //open chest texture
+            OpenChest.sprite.setPosition(chestArray[counter]->rect.getPosition());
+            openChestArray.push_back(std::make_shared<Chest>(OpenChest));
+
+            //drop coin
+            if(generateRandom(1) == 1) {
+                PickUp.rect.setPosition(chestArray[counter]->rect.getPosition());
+                pickUpArray.push_back(std::make_shared<PickUpClass>(PickUp));
+            }
+
+            chestArray.erase(iter);
+            break;
+        }
+        counter++;
+    }
+}
+
