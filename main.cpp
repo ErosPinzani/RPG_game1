@@ -208,7 +208,7 @@ int main(){
         aoe_collision(AoeBulletArray, enemyArray, chestArray, TextDisplay1, textDisplayArray);
 
         //enemy aggro AI
-        aggro(enemyArray, Hero1, clock);
+        aggro(enemyArray, Hero1, clock4);
 
 
 
