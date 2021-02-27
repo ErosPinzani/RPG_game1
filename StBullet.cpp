@@ -12,13 +12,13 @@ StBullet::StBullet() {
 }
 
 void StBullet::Update() {
-    if (direction == 1) //up
+    if (direction == U) //up
         rect.move(0, -movementSpeed);
-    if (direction == 2) //down
+    if (direction == D) //down
         rect.move(0, movementSpeed);
-    if (direction == 3) //left
+    if (direction == L) //left
         rect.move(-movementSpeed, 0);
-    if (direction == 4) //right
+    if (direction == R) //right
         rect.move(movementSpeed, 0);
 
     //lifetime
