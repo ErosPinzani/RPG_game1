@@ -8,32 +8,32 @@
 void Character::UpdateMovement(bool testing, sf::Keyboard::Key key) {
     sprite.setPosition(rect.getPosition());
 
-    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) && Character::Walkable(1))
-    || (testing && key == sf::Keyboard::W  && Character::Walkable(1))){
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W) && Character::Walkable(U))
+    || (testing && key == sf::Keyboard::W  && Character::Walkable(U))){
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*3, 31.7, 31.7));
-        direction = 1;
+        direction = U;
     }
 
-    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) && Character::Walkable(2))
-        || (testing && key == sf::Keyboard::S  && Character::Walkable(2))){
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S) && Character::Walkable(D))
+        || (testing && key == sf::Keyboard::S  && Character::Walkable(D))){
         rect.move(0, movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 0, 31.7, 31.7));
-        direction = 2;
+        direction = D;
     }
 
-    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) && Character::Walkable(3))
-        || (testing && key == sf::Keyboard::A  && Character::Walkable(3))){
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A) && Character::Walkable(L))
+        || (testing && key == sf::Keyboard::A  && Character::Walkable(L))){
         rect.move(-movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7, 31.7, 31.7));
-        direction = 3;
+        direction = L;
     }
 
-    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) && Character::Walkable(4))
-        || (testing && key == sf::Keyboard::D  && Character::Walkable(4))){
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D) && Character::Walkable(R))
+        || (testing && key == sf::Keyboard::D  && Character::Walkable(R))){
         rect.move(movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*2, 31.7, 31.7));
-        direction = 4;
+        direction = R;
     }
 
     counterWalking++;
@@ -44,19 +44,19 @@ void Character::UpdateMovement(bool testing, sf::Keyboard::Key key) {
 bool Character::Walkable (int direction) {
     int x =  rect.getPosition().x;
     int y = rect.getPosition().y;
-    if (direction == 1){
+    if (direction == U){
         x = x / 50;
         y = (y - movementSpeed) / 50;
     }
-    if (direction == 2){
+    if (direction == D){
         x = (x + sprite.getTextureRect().width) / 50;
         y = (y + sprite.getTextureRect().height + movementSpeed) / 50;
     }
-    if (direction == 3){
+    if (direction == L){
         x = (x - movementSpeed) / 50;
         y = y / 50;
     }
-    if (direction == 4){
+    if (direction == R){
         x = (x + sprite.getTextureRect().width + movementSpeed) / 50;
         y = (y + sprite.getTextureRect().height) / 50;
     }

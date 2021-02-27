@@ -7,13 +7,13 @@
 
 void Bullet::Update() {
     Bullet::Walkable(direction);
-    if (direction == 1) //up
+    if (direction == U) //up
         rect.move(0, -movementSpeed);
-    if (direction == 2) //down
+    if (direction == D) //down
         rect.move(0, movementSpeed);
-    if (direction == 3) //left
+    if (direction == L) //left
         rect.move(-movementSpeed, 0);
-    if (direction == 4) //right
+    if (direction == R) //right
         rect.move(movementSpeed, 0);
 
     //lifetime
@@ -28,19 +28,19 @@ void Bullet::Update() {
 void Bullet::Walkable (int direction) {
     int x =  rect.getPosition().x;
     int y = rect.getPosition().y;
-    if (direction == 1){
+    if (direction == U){
         x = x / 50;
         y = (y - movementSpeed) / 50;
     }
-    if (direction == 2){
+    if (direction == D){
         x = (x + sprite.getTextureRect().width) / 50;
         y = (y + sprite.getTextureRect().height + movementSpeed) / 50;
     }
-    if (direction == 3){
+    if (direction == L){
         x = (x - movementSpeed) / 50;
         y = y / 50;
     }
-    if (direction == 4){
+    if (direction == R){
         x = (x + sprite.getTextureRect().width + movementSpeed) / 50;
         y = (y + sprite.getTextureRect().height) / 50;
     }

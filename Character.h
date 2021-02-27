@@ -30,9 +30,14 @@ public:
     float movementSpeed;
     int attackDamage;
     int counterWalking = 0;
+    int U = 1;
+    int D = 2;
+    int L = 3;
+    int R = 4;
     int direction = 0; //1 - up, 2 - down, 3 - left, 4 - right
-protected:
+    //std::string direction;
 
+protected:
 
     // setters
     void setHp(int hp);

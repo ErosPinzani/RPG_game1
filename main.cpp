@@ -215,8 +215,6 @@ int main(){
         //enemy aggro AI
         aggro(enemyArray, Hero1, clock4);
 
-
-
         if (elapsed3.asSeconds() >= 0.5) {
             clock3.restart();
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {

@@ -19,22 +19,22 @@ Enemy::Enemy() {
 void Enemy::UpdateMovement(bool testing, sf::Keyboard::Key key) {
     sprite.setPosition(rect.getPosition());
     text.setPosition(rect.getPosition().x - rect.getSize().x/2 - 5, rect.getPosition().y - rect.getSize().y/2 - 5);
-    if (direction == 1 && Character::Walkable(1)){ //up
+    if (direction == U && Character::Walkable(U)){ //up
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*3, 31.7, 31.7));
     }
 
-    else if (direction == 2 && Character::Walkable(2)){ //down
+    else if (direction == D && Character::Walkable(D)){ //down
         rect.move(0, movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 0, 31.7, 31.7));
     }
 
-    else if (direction == 3 && Character::Walkable(3)){ //left
+    else if (direction == L && Character::Walkable(L)){ //left
         rect.move(-movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7, 31.7, 31.7));
     }
 
-    else if (direction == 4 && Character::Walkable(4)){ //right
+    else if (direction == 4 && Character::Walkable(R)){ //right
         rect.move(movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*2, 31.7, 31.7));
     }
