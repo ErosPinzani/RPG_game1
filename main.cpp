@@ -28,6 +28,8 @@ void delete_AoeBullet(vector<sptr<AoeBullet>> &AoeBulletArray);
 void delete_text(vector<sptr<TextDisplayClass>> &textDisplayArray);
 void delete_chest(vector<sptr<Chest>> &chestArray, Chest &OpenChest, vector<sptr<Chest>> &openChestArray, PickUpClass &PickUp, vector<sptr<PickUpClass>> &pickUpArray);
 void delete_PickUp_items(vector<sptr<PickUpClass>> &pickUpArray);
+void draw(vector<sptr<Enemy>> &bloodArray, vector<sptr<Chest>> &chestArray, vector<sptr<Chest>> &openChestArray, vector<sptr<PickUpClass>> &pickUpArray, vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> &enemyArray, vector<sptr<TextDisplayClass>> &textDisplayArray, Hero &Hero, sf::RenderWindow &window);
+
 
 int main(){
     //variables
@@ -109,10 +111,9 @@ int main(){
     class MeleeWeapon MeleeWeapon1;
 
     //Bullet vector array
-    vector<sptr<AoeBullet>>::const_iterator iter;
     vector<sptr<AoeBullet>> AoeBulletArray;
 
-    vector<sptr<StBullet>>::const_iterator iter2;
+    //vector<sptr<StBullet>>::const_iterator iter2;
     vector<sptr<StBullet>> StBulletArray;
 
     //Bullet object
@@ -123,7 +124,6 @@ int main(){
     StBullet1.sprite.setTexture(textureAoeBullet);
 
     //enemy vector array
-    vector<sptr<Enemy>>::const_iterator iter4;
     vector<sptr<Enemy>> enemyArray;
 
     //enemy object
@@ -134,7 +134,6 @@ int main(){
     Enemy1.text.setFillColor(sf::Color::Red);
 
     //blood vector array
-    vector<sptr<Enemy>>::const_iterator iter5;
     vector<sptr<Enemy>> bloodArray;
 
     //blood object
@@ -143,10 +142,8 @@ int main(){
     Blood1.sprite.setTextureRect(sf::IntRect(0, 0, 70, 53));
 
     //chest vector array
-    vector<sptr<Chest>>::const_iterator iter9;
     vector<sptr<Chest>> chestArray;
 
-    vector<sptr<Chest>>::const_iterator iter6;
     vector<sptr<Chest>> openChestArray;
 
     //chest object
@@ -158,7 +155,6 @@ int main(){
     OpenChest1.sprite.setTextureRect(sf::IntRect(0, 45.75*3, 50, 47.67));
 
     //text vector array
-    vector<sptr<TextDisplayClass>>::const_iterator iter8;
     vector<sptr<TextDisplayClass>> textDisplayArray;
 
     //text object
@@ -166,7 +162,6 @@ int main(){
     TextDisplay1.text.setFont(font);
 
     //pickUp vector array
-    vector<sptr<PickUpClass>>::const_iterator iter11;
     vector<sptr<PickUpClass>> pickUpArray;
 
     //coin object
@@ -187,8 +182,6 @@ int main(){
         }
         //clear screen
         window.clear();
-
-        //cout << Hero1.rect.getPosition().x <<"   "<<Hero1.rect.getPosition().y<< endl ;
 
         //render map
         Map::getInstance()->vectorM1;
@@ -214,7 +207,8 @@ int main(){
 
         //enemy aggro AI
         aggro(enemyArray, Hero1, clock4);
-
+/*
+        //melee weapon
         if (elapsed3.asSeconds() >= 0.5) {
             clock3.restart();
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
@@ -238,7 +232,7 @@ int main(){
                 }
             }
         }
-
+*/
         //delete dead enemy
         delete_enemy(enemyArray, PickUp1, pickUpArray, Blood1, bloodArray);
 
@@ -278,59 +272,8 @@ int main(){
             }
         }
 
-        //draw blood
-        counter = 0;
-        for (iter5 = bloodArray.begin(); iter5 != bloodArray.end(); iter5++) {
-            window.draw(bloodArray[counter]->sprite);
-            counter++;
-        }
-
-        //draw chest
-        counter = 0;
-        for (iter9 = chestArray.begin(); iter9 != chestArray.end(); iter9++) {
-            chestArray[counter]->Update();
-            window.draw(chestArray[counter]->sprite);
-            counter++;
-        }
-
-        //draw open chest
-        counter = 0;
-        for (iter6 = openChestArray.begin(); iter6 != openChestArray.end(); iter6++) {
-            window.draw(openChestArray[counter]->sprite);
-            counter++;
-        }
-
-        //draw PickUpClass items
-        counter = 0;
-        for (iter11 = pickUpArray.begin(); iter11 != pickUpArray.end(); iter11++) {
-            pickUpArray[counter]->Update();
-            window.draw(pickUpArray[counter]->sprite);
-            counter++;
-        }
-
-        //draw AoeBullet
-        counter = 0;
-        for (iter = AoeBulletArray.begin(); iter != AoeBulletArray.end(); iter++) {
-            AoeBulletArray[counter]->Update(); //update AoeBullet
-            window.draw(AoeBulletArray[counter]->sprite);
-            counter++;
-        }
-
-        //draw enemies
-        counter = 0;
-        for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-            enemyArray[counter]->UpdateMovement();
-            window.draw(enemyArray[counter]->sprite);
-            counter++;
-        }
-
-        //draw enemy's hp
-        counter = 0;
-        for (iter4 = enemyArray.begin(); iter4 != enemyArray.end(); iter4++) {
-            enemyArray[counter]->text.setString("HP " + to_string(enemyArray[counter]->hp) + "/" + to_string(enemyArray[counter]->maxhp));
-            window.draw(enemyArray[counter]->text);
-            counter++;
-        }
+        //draw
+        draw(bloodArray, chestArray, openChestArray, pickUpArray, AoeBulletArray, enemyArray, textDisplayArray, Hero1, window);
 
         //update MeleeWeapon
         MeleeWeapon1.Update();
@@ -345,17 +288,6 @@ int main(){
         window.setView(view1);
         view1.setCenter(Hero1.rect.getPosition());
 
-        //draw hero
-        window.draw(Hero1.sprite);
-
-        //draw text
-        counter = 0;
-        for (iter8 = textDisplayArray.begin(); iter8 != textDisplayArray.end(); iter8++) {
-            textDisplayArray[counter]->Update();
-            window.draw(textDisplayArray[counter]->text);
-            counter++;
-        }
-
         //hero HP text
         textHP.setString("HP " + to_string(Hero1.hp) + "/" + to_string(Hero1.maxhp));
         window.draw(textHP);
@@ -369,7 +301,6 @@ int main(){
         //update the window
         window.display();
     }
-
 
     return 0;
 }
@@ -589,4 +520,80 @@ void delete_PickUp_items(vector<sptr<PickUpClass>> &pickUpArray){
         }
         counter++;
     }
+}
+
+void draw(vector<sptr<Enemy>> &bloodArray, vector<sptr<Chest>> &chestArray, vector<sptr<Chest>> &openChestArray, vector<sptr<PickUpClass>> &pickUpArray, vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> &enemyArray, vector<sptr<TextDisplayClass>> &textDisplayArray, Hero &Hero, sf::RenderWindow &window){
+    int counter;
+    vector<sptr<Enemy>>::const_iterator iter1;
+    vector<sptr<Chest>>::const_iterator iter2;
+    vector<sptr<Chest>>::const_iterator iter3;
+    vector<sptr<PickUpClass>>::const_iterator iter4;
+    vector<sptr<AoeBullet>>::const_iterator iter5;
+    vector<sptr<Enemy>>::const_iterator iter6;
+    vector<sptr<TextDisplayClass>>::const_iterator iter7;
+
+    //draw blood
+    counter= 0;
+    for (iter1 = bloodArray.begin(); iter1 != bloodArray.end(); iter1++) {
+        window.draw(bloodArray[counter]->sprite);
+        counter++;
+    }
+
+    //draw chest
+    counter = 0;
+    for (iter2 = chestArray.begin(); iter2 != chestArray.end(); iter2++) {
+        chestArray[counter]->Update();
+        window.draw(chestArray[counter]->sprite);
+        counter++;
+    }
+
+    //draw open chest
+    counter = 0;
+    for (iter3 = openChestArray.begin(); iter3 != openChestArray.end(); iter3++) {
+        window.draw(openChestArray[counter]->sprite);
+        counter++;
+    }
+
+    //draw PickUpClass items
+    counter = 0;
+    for (iter4 = pickUpArray.begin(); iter4 != pickUpArray.end(); iter4++) {
+        pickUpArray[counter]->Update();
+        window.draw(pickUpArray[counter]->sprite);
+        counter++;
+    }
+
+    //draw AoeBullet
+    counter = 0;
+    for (iter5 = AoeBulletArray.begin(); iter5 != AoeBulletArray.end(); iter5++) {
+        AoeBulletArray[counter]->Update(); //update AoeBullet
+        window.draw(AoeBulletArray[counter]->sprite);
+        counter++;
+    }
+
+    //draw enemies
+    counter = 0;
+    for (iter6 = enemyArray.begin(); iter6 != enemyArray.end(); iter6++) {
+        enemyArray[counter]->UpdateMovement();
+        window.draw(enemyArray[counter]->sprite);
+        counter++;
+    }
+
+    //draw enemy's hp
+    counter = 0;
+    for (iter6 = enemyArray.begin(); iter6 != enemyArray.end(); iter6++) {
+        enemyArray[counter]->text.setString("HP " + to_string(enemyArray[counter]->hp) + "/" + to_string(enemyArray[counter]->maxhp));
+        window.draw(enemyArray[counter]->text);
+        counter++;
+    }
+
+    //draw text
+    counter = 0;
+    for (iter7 = textDisplayArray.begin(); iter7 != textDisplayArray.end(); iter7++) {
+        textDisplayArray[counter]->Update();
+        window.draw(textDisplayArray[counter]->text);
+        counter++;
+    }
+
+    //draw hero
+    window.draw(Hero.sprite);
 }
