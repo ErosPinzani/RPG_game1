@@ -4,17 +4,11 @@
 #include <memory>
 
 #include "Functions.h"
-#include "Random.h"
-#include "Hero.h"
-#include "Enemy.h"
-#include "AoeBullet.h"
 #include "StBullet.h"
 #include "MeleeWeapon.h"
-#include "TextDisplayClass.h"
 #include "RenderMap.h"
 #include "Map.h"
-#include "PickUpClass.h"
-#include "Chest.h"
+
 
 using namespace std;
 // Add a short alias for std::shared_ptr to the current environment
@@ -25,9 +19,6 @@ template <class T> using sptr = std::shared_ptr<T>;
 
 int main(){
     //variables
-    int counter;
-    int counter2;
-    int counter3;
     int HeroChoice;
     sf::Clock clock;
     sf::Clock clock2;
@@ -296,4 +287,3 @@ int main(){
 
     return 0;
 }
-
