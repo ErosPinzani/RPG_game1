@@ -5,11 +5,17 @@
 #ifndef RPG_GAME_OBSTACLE_H
 #define RPG_GAME_OBSTACLE_H
 
-#include "Character.h"
+#include <SFML/Graphics.hpp>
+using namespace std;
 
-class Chest: public Character {
+class Chest {
 public:
+    sf::RectangleShape rect;
+    sf::Sprite sprite;
+    sf::Text text;
+
     bool alive = true;
+    int hp = 5;
 
     Chest();
     void Update();
