@@ -14,10 +14,6 @@
 // Add a short alias for std::shared_ptr to the current environment
 template <class T> using sptr = std::shared_ptr<T>;
 
-
-
-
-
 void item_collision(Hero &Hero, vector<sptr<PickUpClass>> &pickUpArray);
 void enemy_collision_player(Hero &Hero, vector<sptr<Enemy>> &enemyArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray, sf::Clock &clock);
 void aoe_collision(vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> &enemyArray, vector<sptr<Chest>> &chestArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray);
@@ -54,17 +50,16 @@ void enemy_collision_player(Hero &Hero, vector<sptr<Enemy>> &enemyArray, TextDis
             if (Hero.rect.getGlobalBounds().intersects(enemyArray[counter]->rect.getGlobalBounds())) {
 
                 //text display
-                TextDisplay.text.setString(to_string(enemyArray[counter]->attackDamage));
+                TextDisplay.text.setString(to_string(enemyArray[counter]->getAttackDamage()));
                 TextDisplay.text.setPosition(Hero.rect.getPosition().x + Hero.rect.getSize().x / 2,Hero.rect.getPosition().y - Hero.rect.getSize().y / 2);
                 textDisplayArray.push_back(std::make_shared<TextDisplayClass>(TextDisplay));
 
-                Hero.hp -= enemyArray[counter]->attackDamage;
+                Hero.hp -= enemyArray[counter]->getAttackDamage();
             }
             counter++;
         }
     }
 }
-
 
 void aoe_collision(vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> &enemyArray, vector<sptr<Chest>> &chestArray, TextDisplayClass &TextDisplay, vector<sptr<TextDisplayClass>> &textDisplayArray){
     vector<sptr<AoeBullet>>::const_iterator iter;
@@ -79,11 +74,11 @@ void aoe_collision(vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> 
                 AoeBulletArray[counter]->destroy = true;
 
                 //text display
-                TextDisplay.text.setString(to_string(AoeBulletArray[counter]->attackDamage));
+                TextDisplay.text.setString(to_string(AoeBulletArray[counter]->getAttackDamage()));
                 TextDisplay.text.setPosition(enemyArray[counter2]->rect.getPosition().x + enemyArray[counter2]->rect.getSize().x / 2,enemyArray[counter2]->rect.getPosition().y - enemyArray[counter2]->rect.getSize().y / 2);
                 textDisplayArray.push_back(std::make_shared<TextDisplayClass>(TextDisplay));
 
-                enemyArray[counter2]->hp -= AoeBulletArray[counter]->attackDamage;
+                enemyArray[counter2]->hp -= AoeBulletArray[counter]->getAttackDamage();
                 if (enemyArray[counter2]->hp <= 0)
                     enemyArray[counter2]->alive = false;
 
@@ -97,7 +92,7 @@ void aoe_collision(vector<sptr<AoeBullet>> &AoeBulletArray, vector<sptr<Enemy>> 
         for (iter2 = chestArray.begin(); iter2 != chestArray.end(); iter2++) {
             if (AoeBulletArray[counter]->rect.getGlobalBounds().intersects(chestArray[counter3]->rect.getGlobalBounds())) {
                 AoeBulletArray[counter]->destroy = true;
-                chestArray[counter3]->hp -= AoeBulletArray[counter]->attackDamage;
+                chestArray[counter3]->hp -= AoeBulletArray[counter]->getAttackDamage();
                 if (chestArray[counter3]->hp <= 0)
                     chestArray[counter3]->alive = false;
             }
@@ -120,43 +115,43 @@ void aggro(vector<sptr<Enemy>> &enemyArray, Hero &Hero, sf::Clock &clock){
 
                     //hero to up
                     if ((Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter]->rect.getPosition().y) <= 40)) {
-                        enemyArray[counter]->direction = 1;
+                        enemyArray[counter]->direction = Character::up;
                     }
                     //hero to down
                     if ((Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter]->rect.getPosition().y) <= 40)) {
-                        enemyArray[counter]->direction = 2;
+                        enemyArray[counter]->direction = Character::down;
                     }
                     //hero to right
                     if ((Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter]->rect.getPosition().y) <= 40)) {
-                        enemyArray[counter]->direction = 3;
+                        enemyArray[counter]->direction = Character::left;
                     }
                     //hero to left
                     if ((Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x) && (abs(Hero.rect.getPosition().y - enemyArray[counter]->rect.getPosition().y) <= 40)) {
-                        enemyArray[counter]->direction = 4;
+                        enemyArray[counter]->direction = Character::right;
                     }
                 }
 
                     //enemy chases Hero
                 else if (tempRand == 2) {
                     if (Hero.rect.getPosition().y < enemyArray[counter]->rect.getPosition().y)
-                        enemyArray[counter]->direction = 1;
+                        enemyArray[counter]->direction = Character::up;
                     else if (Hero.rect.getPosition().y > enemyArray[counter]->rect.getPosition().y)
-                        enemyArray[counter]->direction = 2;
+                        enemyArray[counter]->direction = Character::down;
                     else if (Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x)
-                        enemyArray[counter]->direction = 3;
+                        enemyArray[counter]->direction = Character::left;
                     else if (Hero.rect.getPosition().x > enemyArray[counter]->rect.getPosition().x)
-                        enemyArray[counter]->direction = 4;
+                        enemyArray[counter]->direction = Character::right;
                 }
 
                 else {
                     if (Hero.rect.getPosition().x < enemyArray[counter]->rect.getPosition().x)
-                        enemyArray[counter]->direction = 3;
+                        enemyArray[counter]->direction = Character::left;
                     else if (Hero.rect.getPosition().x > enemyArray[counter]->rect.getPosition().x)
-                        enemyArray[counter]->direction = 4;
+                        enemyArray[counter]->direction = Character::right;
                     else if (Hero.rect.getPosition().y < enemyArray[counter]->rect.getPosition().y)
-                        enemyArray[counter]->direction = 1;
+                        enemyArray[counter]->direction = Character::up;
                     else if (Hero.rect.getPosition().y > enemyArray[counter]->rect.getPosition().y)
-                        enemyArray[counter]->direction = 2;
+                        enemyArray[counter]->direction = Character::down;
                 }
             }
         }
@@ -186,7 +181,6 @@ void delete_enemy(vector<sptr<Enemy>> &enemyArray, PickUpClass &PickUp, vector<s
         counter++;
     }
 }
-
 
 void delete_AoeBullet(vector<sptr<AoeBullet>> &AoeBulletArray){
     vector<sptr<AoeBullet>>::const_iterator iter;
@@ -306,7 +300,7 @@ void draw(vector<sptr<Enemy>> &bloodArray, vector<sptr<Chest>> &chestArray, vect
     //draw enemy's hp
     counter = 0;
     for (iter6 = enemyArray.begin(); iter6 != enemyArray.end(); iter6++) {
-        enemyArray[counter]->text.setString("HP " + to_string(enemyArray[counter]->hp) + "/" + to_string(enemyArray[counter]->maxhp));
+        enemyArray[counter]->text.setString("HP " + to_string(enemyArray[counter]->hp) + "/" + to_string(enemyArray[counter]->getMaxhp()));
         window.draw(enemyArray[counter]->text);
         counter++;
     }

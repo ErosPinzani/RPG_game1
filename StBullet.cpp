@@ -4,21 +4,21 @@
 #include "StBullet.h"
 
 StBullet::StBullet() {
-    movementSpeed = 15;
-    attackDamage = 5;
+    setMovementSpeed(15);
+    setAttackDamage(5);
     rect.setSize(sf::Vector2f(10, 10));
     rect.setPosition(0, 0);
     sprite.setTextureRect(sf::IntRect(0,0,55,42));
 }
 
 void StBullet::Update() {
-    if (direction == U) //up
+    if (direction == up) //up
         rect.move(0, -movementSpeed);
-    if (direction == D) //down
+    if (direction == down) //down
         rect.move(0, movementSpeed);
-    if (direction == L) //left
+    if (direction == left) //left
         rect.move(-movementSpeed, 0);
-    if (direction == R) //right
+    if (direction == right) //right
         rect.move(movementSpeed, 0);
 
     //lifetime

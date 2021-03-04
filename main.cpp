@@ -250,7 +250,7 @@ int main(){
             clock.restart();
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 AoeBullet1.rect.setPosition(Hero1.rect.getPosition().x + Hero1.rect.getSize().x/2 - AoeBullet1.rect.getSize().x/2, Hero1.rect.getPosition().y + Hero1.rect.getSize().y/2 - AoeBullet1.rect.getSize().y/2);
-                AoeBullet1.direction = Hero1.direction;
+                AoeBullet1.direction = static_cast<Bullet::Direction>(Hero1.direction);
                 AoeBulletArray.push_back(std::make_shared<AoeBullet>(AoeBullet1));
             }
         }
@@ -272,7 +272,7 @@ int main(){
         view1.setCenter(Hero1.rect.getPosition());
 
         //hero HP text
-        textHP.setString("HP " + to_string(Hero1.hp) + "/" + to_string(Hero1.maxhp));
+        textHP.setString("HP " + to_string(Hero1.hp) + "/" + to_string(Hero1.getMaxhp()));
         window.draw(textHP);
         textHP.setPosition(Hero1.rect.getPosition().x - window.getSize().x/2, Hero1.rect.getPosition().y - window.getSize().y/2);
 

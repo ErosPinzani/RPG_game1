@@ -5,8 +5,8 @@
 #include "AoeBullet.h"
 
 AoeBullet::AoeBullet() {
-    movementSpeed = 8;
-    attackDamage = 1;
+    setMovementSpeed(8);
+    setAttackDamage(2);
     rect.setSize(sf::Vector2f(35, 34));
     rect.setPosition(0, 0);
     sprite.setTextureRect(sf::IntRect(0,0,35,34));

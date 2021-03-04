@@ -5,9 +5,9 @@
 #include "Hero.h"
 
 Hero::Hero() {
-    hp = 20;
-    maxhp = 20;
-    movementSpeed = 5;
+    setHp(20);
+    setMaxhp(20);
+    setMovementSpeed(5);
 
     rect.setSize(sf::Vector2f(31.7, 31.7));
     rect.setPosition(200-24, 200-32);

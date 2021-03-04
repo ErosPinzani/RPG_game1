@@ -7,13 +7,13 @@
 
 void Bullet::Update() {
     Bullet::Walkable(direction);
-    if (direction == U) //up
+    if (direction == up) //up
         rect.move(0, -movementSpeed);
-    if (direction == D) //down
+    if (direction == down) //down
         rect.move(0, movementSpeed);
-    if (direction == L) //left
+    if (direction == left) //left
         rect.move(-movementSpeed, 0);
-    if (direction == R) //right
+    if (direction == right) //right
         rect.move(movementSpeed, 0);
 
     //lifetime
@@ -28,19 +28,19 @@ void Bullet::Update() {
 void Bullet::Walkable (int direction) {
     int x =  rect.getPosition().x;
     int y = rect.getPosition().y;
-    if (direction == U){
+    if (direction == up){
         x = x / 50;
         y = (y - movementSpeed) / 50;
     }
-    if (direction == D){
+    if (direction == down){
         x = (x + sprite.getTextureRect().width) / 50;
         y = (y + sprite.getTextureRect().height + movementSpeed) / 50;
     }
-    if (direction == L){
+    if (direction == left){
         x = (x - movementSpeed) / 50;
         y = y / 50;
     }
-    if (direction == R){
+    if (direction == right){
         x = (x + sprite.getTextureRect().width + movementSpeed) / 50;
         y = (y + sprite.getTextureRect().height) / 50;
     }
@@ -48,3 +48,10 @@ void Bullet::Walkable (int direction) {
     if (Map::getInstance()->vectorM1[pos] == 1)
         destroy = true;
 }
+
+//getters
+int Bullet::getAttackDamage() {return Bullet::attackDamage;}
+
+//setters
+void Bullet::setMovementSpeed(int movementSpeed) {Bullet::movementSpeed = movementSpeed;}
+void Bullet::setAttackDamage(int attackDamage) {Bullet::attackDamage = attackDamage;}

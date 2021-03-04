@@ -15,37 +15,34 @@ public:
     sf::Text text;
 
     // getters
-    int getHp();
     int getMaxhp();
-    float getMovementSpeed();
     int getAttackDamage();
-    int getCounterWalking();
     int getDirection();
 
     virtual void UpdateMovement(bool testing = false, sf::Keyboard::Key key = sf::Keyboard::D);
     bool Walkable(int direction);
 
     int hp;
-    int maxhp;
-    float movementSpeed;
-    int attackDamage;
     int counterWalking = 0;
-    int U = 1;
-    int D = 2;
-    int L = 3;
-    int R = 4;
-    int direction = 0; //1 - up, 2 - down, 3 - left, 4 - right
-    //std::string direction;
+    enum Direction {
+        up,
+        down,
+        left,
+        right
+    };
+    Direction direction;
 
 protected:
+    int attackDamage;
+    int maxhp;
+    float movementSpeed;
 
     // setters
     void setHp(int hp);
     void setMaxhp(int maxhp);
     void setMovementSpeed(float movementSpeeed);
     void setAttackDamage(int attackDamage);
-    void setCounterWalking(int counterWalking);
-    void setDirection(int direction);
+    void setDirection(Direction direction);
 
 };
 

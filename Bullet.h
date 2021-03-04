@@ -12,20 +12,33 @@ public:
     sf::RectangleShape rect;
     sf::Sprite sprite;
 
-    int movementSpeed = 1;
-    int attackDamage;
-    int direction = 0; //1 - up, 2 - down, 3 - left, 4 - right
+    //getters
+    int getAttackDamage();
+
     bool destroy = false;
     int counterLifetime = 0;
-    int lifetime = 100;
 
-    int U = 1;
-    int D = 2;
-    int L = 3;
-    int R = 4;
+    enum Direction {
+        up,
+        down,
+        left,
+        right
+    };
+    Direction direction;
 
     virtual void Update();
     void Walkable(int direction);
+
+
+protected:
+    int movementSpeed;
+    int attackDamage;
+    int lifetime = 100;
+
+    //setters
+    void setMovementSpeed(int movementSpeed);
+    void setAttackDamage(int attackDamage);
+
 };
 
 

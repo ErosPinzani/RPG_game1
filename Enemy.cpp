@@ -5,10 +5,10 @@
 #include "Enemy.h"
 
 Enemy::Enemy() {
-    hp = 15;
-    maxhp = 15;
-    movementSpeed = 2;
-    attackDamage = 2;
+    setHp(15);
+    setMaxhp(15);
+    setMovementSpeed(2);
+    setAttackDamage(2);
 
     rect.setSize(sf::Vector2f(31.7, 31.7));
     rect.setPosition(75, 42);
@@ -19,22 +19,22 @@ Enemy::Enemy() {
 void Enemy::UpdateMovement(bool testing, sf::Keyboard::Key key) {
     sprite.setPosition(rect.getPosition());
     text.setPosition(rect.getPosition().x - rect.getSize().x/2 - 5, rect.getPosition().y - rect.getSize().y/2 - 5);
-    if (direction == U && Character::Walkable(U)){ //up
+    if (direction == up && Character::Walkable(up)){ //up
         rect.move(0, -movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*3, 31.7, 31.7));
     }
 
-    else if (direction == D && Character::Walkable(D)){ //down
+    else if (direction == down && Character::Walkable(down)){ //down
         rect.move(0, movementSpeed);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 0, 31.7, 31.7));
     }
 
-    else if (direction == L && Character::Walkable(L)){ //left
+    else if (direction == left && Character::Walkable(left)){ //left
         rect.move(-movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7, 31.7, 31.7));
     }
 
-    else if (direction == 4 && Character::Walkable(R)){ //right
+    else if (direction == right && Character::Walkable(right)){ //right
         rect.move(movementSpeed, 0);
         sprite.setTextureRect(sf::IntRect(counterWalking * 31.7, 31.7*2, 31.7, 31.7));
     }
@@ -45,7 +45,7 @@ void Enemy::UpdateMovement(bool testing, sf::Keyboard::Key key) {
 
     counter++;
     if (counter >= movementLength) {
-        direction = generateRandom(20);
+        direction = static_cast<Direction>(generateRandom(20));
         counter = 0;
     }
 }
