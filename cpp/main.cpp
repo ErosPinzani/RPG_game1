@@ -3,11 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
-#include "Functions.h"
-#include "StBullet.h"
-#include "MeleeWeapon.h"
-#include "RenderMap.h"
-#include "Map.h"
+#include "../h/Functions.h"
+#include "../h/Projectiles/StBullet.h"
+#include "../h/Projectiles/MeleeWeapon.h"
+#include "../h/RenderMap.h"
+#include "../h/Map.h"
 
 
 using namespace std;

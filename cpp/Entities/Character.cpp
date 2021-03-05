@@ -2,8 +2,8 @@
 // Created by erosp on 21/10/2020.
 //
 
-#include "Character.h"
-#include "Map.h"
+#include "../../h/Entities/Character.h"
+#include "../../h/Map.h"
 
 void Character::UpdateMovement(bool testing, sf::Keyboard::Key key) {
     sprite.setPosition(rect.getPosition());

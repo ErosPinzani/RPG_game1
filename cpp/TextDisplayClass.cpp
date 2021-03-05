@@ -2,7 +2,7 @@
 // Created by erosp on 01/12/2020.
 //
 
-#include "TextDisplayClass.h"
+#include "../h/TextDisplayClass.h"
 
 TextDisplayClass::TextDisplayClass() {
     text.setFillColor(sf::Color::Red);

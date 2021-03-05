@@ -2,7 +2,7 @@
 // Created by Francesco on 30/11/2020.
 //
 
-#include "Random.h"
+#include "../h/Random.h"
 
 int generateRandom(int max) {
     int randomNumber = rand();

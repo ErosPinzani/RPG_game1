@@ -2,7 +2,7 @@
 // Created by Francesco on 22/10/2020.
 //
 
-#include "MeleeWeapon.h"
+#include "../../h/Projectiles/MeleeWeapon.h"
 
 MeleeWeapon::MeleeWeapon() {
     rect.setSize(sf::Vector2f(48*3, 64*3));

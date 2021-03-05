@@ -2,7 +2,7 @@
 // Created by erosp on 22/10/2020.
 //
 
-#include "Tile.h"
+#include "../h/Tile.h"
 
 const std::string &Tile::getType() const {
     return type;

@@ -2,7 +2,7 @@
 // Created by Francesco on 22/10/2020.
 //
 
-#include "PickUpClass.h"
+#include "../h/PickUpClass.h"
 
 PickUpClass::PickUpClass() {
     rect.setSize(sf::Vector2f(20, 20));

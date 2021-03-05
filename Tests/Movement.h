@@ -6,8 +6,8 @@
 #define MAIN_CPP_MOVEMENT_H
 
 #include "gtest/gtest.h"
-#include "../Hero.h"
-#include "../Map.h"
+#include "../h/Entities/Hero.h"
+#include "../h/Map.h"
 #include <windows.h>
 
 

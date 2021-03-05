@@ -6,7 +6,7 @@
 #define RPG_GAME_ENEMY_H
 
 #include "Character.h"
-#include "Random.h"
+#include "../Random.h"
 
 class Enemy: public Character {
 public:

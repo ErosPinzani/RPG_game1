@@ -2,7 +2,7 @@
 // Created by erosp on 22/10/2020.
 //
 
-#include "Enemy.h"
+#include "../../h/Entities/Enemy.h"
 
 Enemy::Enemy() {
     setHp(15);

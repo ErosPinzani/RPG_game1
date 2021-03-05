@@ -2,8 +2,8 @@
 // Created by Francesco on 22/10/2020.
 //
 
-#include "Bullet.h"
-#include "Map.h"
+#include "../../h/Projectiles/Bullet.h"
+#include "../../h/Map.h"
 
 void Bullet::Update() {
     Bullet::Walkable(direction);

@@ -2,7 +2,7 @@
 // Created by Francesco on 22/10/2020.
 //
 
-#include "AoeBullet.h"
+#include "../../h/Projectiles/AoeBullet.h"
 
 AoeBullet::AoeBullet() {
     setMovementSpeed(8);

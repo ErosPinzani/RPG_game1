@@ -1,7 +1,7 @@
 //
 // Created by Francesco on 22/10/2020.
 //
-#include "StBullet.h"
+#include "../../h/Projectiles/StBullet.h"
 
 StBullet::StBullet() {
     setMovementSpeed(15);

@@ -6,11 +6,11 @@
 #define ENEMY_CPP_COLLISIONS_H
 
 #include "gtest/gtest.h"
-#include "../Hero.h"
-#include "../Enemy.h"
-#include "../Map.h"
-#include "../Chest.h"
-#include "../AoeBullet.h"
+#include "../h/Entities/Hero.h"
+#include "../h/Entities/Enemy.h"
+#include "../h/Map.h"
+#include "../h/Chest.h"
+#include "../h/Projectiles/AoeBullet.h"
 
 TEST(Collision, WallCollision){
     Map::getInstance()->vectorM1 = std::vector<int> {

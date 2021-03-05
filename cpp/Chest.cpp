@@ -2,7 +2,7 @@
 // Created by erosp on 22/10/2020.
 //
 
-#include "Chest.h"
+#include "../h/Chest.h"
 
 Chest::Chest() {
     sprite.setTextureRect(sf::IntRect(0, 0, 47, 45));

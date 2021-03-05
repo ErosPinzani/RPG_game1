@@ -3,7 +3,7 @@
 //
 
 #include <fstream>
-#include "Map.h"
+#include "../h/Map.h"
 
 Map*Map::instance= nullptr;
 

@@ -5,11 +5,11 @@
 #ifndef MAIN_CPP_FUNCTIONS_H
 #define MAIN_CPP_FUNCTIONS_H
 
-#include "Hero.h"
+#include "Entities/Hero.h"
 #include "PickUpClass.h"
-#include "Enemy.h"
+#include "Entities/Enemy.h"
 #include "TextDisplayClass.h"
-#include "AoeBullet.h"
+#include "Projectiles/AoeBullet.h"
 #include "Chest.h"
 // Add a short alias for std::shared_ptr to the current environment
 template <class T> using sptr = std::shared_ptr<T>;
